@@ -1,0 +1,20 @@
+    <% unless ["edit", "action"].include?(params[:action]) %>
+    <%= link_to image_tag("edit.png", :border=>0), edit_project_path(project) %>  
+    <% end %>
+    <%= link_to image_tag("delete.png", :border=>0), project_path(project), {:method => :delete, :confirm => "Are you sure?"} %>  
+    <% unless params[:controller] == 'jobchecklists' %>
+    <%= link_to image_tag("jobchecklist.png", :border=>0), (project.jobchecklist.blank?) ? new_project_jobchecklists_path(project) : edit_project_jobchecklists_path(project) %>  
+    <% end %> 
+    <%= link_to image_tag("revision.png", :border=>0), revision_project_path({:id => project}) %> 
+    <%#= link_to image_tag("checklist.png", :border=>0), job_checklist_project_path(project), :popup => ['Job_Checklist', 'width=1000,height=600,scrollbars=yes'] %> 
+    <%= link_to image_tag("checklist.png", :border=>0), job_checklist_project_path(project), onclick: "window.open(this.href,'Job_Checklist', 'width=1000,height=600,scrollbars=yes');return false;" %> 
+    <%#= link_to image_tag("checklistlt.png", :border=>0), job_checklist_light_project_path(project), :popup => ['LT', 'width=1000,height=600,scrollbars=yes'] %> 
+    <%= link_to image_tag("checklistlt.png", :border=>0), job_checklist_light_project_url(project), onclick: "window.open(this.href, 'LT' ,'width=1000,height=600,scrollbars=yes');return false;" %> 
+
+    <%#= link_to image_tag("checklistlt.png", :border=>0), job_checklist_light_project_path(project), target: '_blank' %> 
+    <%# confirmation = project.job_status_id == 2 ? '' : remote_function(:confirm => 'Do you want to change Job Status to "In Production"?', :url => {:controller => :projects, :action => :update_job_status, :id => project.id}) %>
+    <%= link_to image_tag("trans.png", :border=>0), transmittal_project_path(project), :onclick => "window.open(this.href,'Transmittal','width=1000,height=600,scrollbars=yes');return false;" %> 
+    <%= link_to image_tag("pdf.png", :border=>0), controller.pdf_linker(project), :onclick => "window.open(this.href,'Transmittal','width=1400,height=900,scrollbars=yes');return false;" %>
+    <%#= link_to image_tag("pdf.png", :border=>0), "#{root_url}/nopdf.html", onclick: "window.open(this.href,'Transmittal','width=1400,height=900,scrollbars=yes');return false;", remote: true %>
+    <%= link_to image_tag("folder-icon.png", :border=>0), controller.job_folder_linker(project), :onclick => "window.open(this.href,'Transmittal','width=800,height=600,scrollbars=yes,menubar=yes');return false;" %>
+    <%#= link_to image_tag("folder-icon.png", :border=>0), "#{root_url}/nofolder.html", :onclick => "window.open(this.href,'Transmittal','width=800,height=600,scrollbars=yes,menubar=yes');return false;" %>

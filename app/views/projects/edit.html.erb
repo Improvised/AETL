@@ -1,0 +1,132 @@
+            
+					
+          <table class="naver">
+           
+              <tr align="center">
+                <td align="center" valign="middle"> 
+                   <font size=3><B> 
+				   <%= link_to image_tag("navbar_left_50.png", :border=>0), edit_project_path(@nav_dn50) %>
+				   <%= link_to image_tag("navbar_left_10.png", :border=>0), edit_project_path(@nav_dn10) %>
+					<%= link_to image_tag("navbar_left_1.png", :border=>0), edit_project_path(@nav_dn1) %>
+					
+					<input type="text" onkeypress="goToEditPage(event)" value="<%= @project.ae_job_id %>" size="8" name="project[ae_job_id]" id="project_ae_job_id" autocomplete="off"/>
+                     
+					 <%= link_to image_tag("navbar_right_1.png", :border=>0), edit_project_path(@nav_up1) %>
+					 <%= link_to image_tag("navbar_right_10.png", :border=>0), edit_project_path(@nav_up10) %>
+					 <%= link_to image_tag("navbar_right_50.png", :border=>0), edit_project_path(@nav_up50) %>
+					 </B></font>
+					
+		
+				    <div id="project_ae_job_id_auto_complete" class="auto_complete" style="display: none;"></div>
+
+                    <script type="text/javascript">
+                    //<![CDATA[
+                        // function goToEditPage(e){
+                        //     var key;
+                        //     if(window.event)
+                        //         key = window.event.keyCode;
+                        //     else
+                        //         key = e.which;
+
+                        //     if (key == 13 && $F('project_id') != "" && window.counter == 1 ) {
+                        //         window.location = "/projects/"+ $F('project_id') +"/edit";
+                        //     } else if (key == 13 && window.counter == 1) {
+                        //         window.counter = 0;
+                        //     } else if (key == 13) {
+                        //         window.counter = 1;
+                        //     }
+                        // }
+                        
+                        // var project_ae_job_id_auto_completer = new Ajax.Autocompleter('project_ae_job_id', 
+                        //     'project_ae_job_id_auto_complete', '/projects/auto_complete_for_project_ae_job_id', {
+                        //     afterUpdateElement : getSelectionId
+                        // });
+                        
+                        // function getSelectionId(text, li) {
+                        //     $('project_id').setValue(li.id);
+                        //    // window.location = "/projects/"+ li.id +"/edit";
+                        // }
+                    //]]>
+
+                    $(document).ready(function(){
+                        $( "#project_ae_job_id" ).autocomplete({
+                          source : function (request, response) {
+                            $.get("/projects/auto_complete_for_project_ae_job_id", { ae_job_id: request.term ,id: "" }, function (data) {
+                                response(data);
+                            });
+                          },
+                          focus: function( event, ui ) {
+                            $( "#project_ae_job_id" ).val( ui.item.ae_job_id );
+                            return false;
+                          },
+                          select: function( event, ui ) {
+                            $( "#project_ae_job_id" ).val( ui.item.ae_job_id );
+                            $( "#project_id" ).val( ui.item.id );
+                            location.href = "/projects/"+ ui.item.id +"/edit"
+                            return false;
+                          }
+                        }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+                          return $("<li id='"+item.id+"'>")
+                            .append( "<a>" + item.ae_job_id + "</a>")
+                            .appendTo( ul );
+                        };
+                      });
+
+                      function goToEditPage(e){
+                          var key;
+                          if(window.event)
+                              key = window.event.keyCode;
+                          else
+                              key = e.which;
+                          if (key == 13 && $('#project_ae_job_id') != "" && window.counter == 1 ) {
+                              location.href = "/projects/"+ $('#project_id').val() +"/edit"
+                          } else if (key == 13 && window.counter == 1) {
+                              window.counter = 0;
+                          } else if (key == 13) {
+                              window.counter = 1;
+                          }
+                      }
+                    </script>
+                    <%= hidden_field_tag :project_id %>
+                </td>
+              </tr>
+      
+          </table>
+
+  
+  <div class="content">
+  	<br>
+      <%= form_for @project, :html => {:class => :form} do |f|%>
+	  <%= submit_tag "Update" %>
+    <h2 class="title">Edit Project</h2>
+    <div class="inner">		
+      <p>
+        <%= render :partial => "shared/project_links", :locals => {:project => @project} %>
+      </p>
+
+        <%= render :partial => "project_form", :locals => {:f => f, :is_readonly => false}%>
+        <div class="actions-bar">
+         
+          <div class="clear"/>
+        </div>
+      <% end -%>
+    </div>
+  </div>
+
+
+<% %w(sales employeeProduction employeeProjectManager contactCompany contactCompanyBilling).each do |name| %>
+
+  <div class="modal fade in" id="<%= name %>Modal" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body" id="<%= name %>Body">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% end %>

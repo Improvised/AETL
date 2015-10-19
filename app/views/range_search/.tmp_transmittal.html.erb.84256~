@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><%= @project.ae_job_id %> Transmittal</title>
+    <%= javascript_include_tag "prototype" %>
+	    <style type="text/css">
+      body {
+        font: 12pt Arial, serif;
+      }
+    </style>
+  </head>
+  <font face="intrepid" size=5> 
+  <body>
+    <%= "<script>" + remote_function(:confirm => 'Do you want to change the delivery status to "Sent Soft Copies & Hard Copies"?', :url => {:action => :update_delivery_status, :id => @project.id}) + "</script>" unless @project.delivery_id == 2 %>
+    <table border="0" cellspacing="2" cellpadding="50" width="100%" bgcolor="#ffffff">
+    	<tr>
+    	<td>	
+	<table align="center" width="750px">
+      <tr>
+        <td colspan="2"><div align="center"><%= image_tag "letterhead.png", :size => "950x161" %></div><br /></td>		
+      </tr>	  
+      <tr>
+       	<td colspan="2"><div align="center"><h2>TRANSMITTAL</h2></div></td>
+      </tr>
+      <tr>
+        <td width="30%">Date : </td>
+        <td><%= Date.today.strftime("%m/%d/%Y") %></td>
+      </tr>
+      <tr>
+        <td valign="top">To : </td>
+        <td>
+          <% unless @project.company.nil? %>
+            <%= @project.company.name + "<br />" if @project.company.name %>
+            <%= @project.company.address_line_1 + "<br />" if @project.company.address_line_1 %>
+            <%= @project.company.address_line_2 if @project.company.address_line_2 %>
+            <%= @project.company.city %>, <%= @project.company.state %> <%= @project.company.zip_code %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">Attn : </td>
+        <td><%= @project.contact.name unless @project.contact.nil? %></td>
+      </tr>
+      <tr>
+        <td valign="top">Project Name : </td>
+        <td><%= @project.name %></td>
+      </tr>
+      <tr>
+        <td valign="top">Project Number : </td>
+        <td><%= @project.number %></td>
+      </tr>
+      <tr>
+        <td valign="top">AE Job ID : </td>
+        <td><%= @project.ae_job_id %></td>
+      </tr>
+      <tr>
+        <td valign="top">Description : </td>
+        <td>
+          Please find enclosed photo simulations for <%= @project.number %>. If you have any questions or
+          comments, please do not hesitate to contact me.
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <br /><br /><br />
+          Thank You,<br /><br />
+		  <b><%= @project.account_manager.name unless @project.account_manager.blank? %></b><br /><br />
+		  <div><%= button_to_function "Print", "$(this).up().hide();window.print()"%></div>
+		   <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+		   </font>
+		   <b><font face="Arial" size=0>
+          THE DATA AND INFORMATION PRESENTED HEREIN HAVE BEEN PRODUCED WITH INDUSTRY STANDARD, BY
+          OPERATORS EXERCISING REASONABLE SKILL AND CARE.  THIS DATA AND INFORMATION IS PROVIDED FOR
+          INFORMATIONAL PURPOSES ONLY.  NO GUARANTEE OR WARRANTY EXPRESSED OR IMPLIED IS MADE WITH
+          RESPECT TO THE ACCURACY OF THIS DATA OR INFORMATION.  IN NO EVENT WILL ARTISTIC ENGINEERING BE
+          HELD LIABLE FOR ANY LOSS OF PROFIT OR ANY OTHER COMMERCIAL DAMAGE INCLUDING BUT NOT LIMITED
+          TO SPECIAL, INCIDENTAL, CONSEQUENTIAL OR OTHER DAMAGES RESULTING FROM THE USE OF THE
+          INFORMATION OR DATA.
+		  </font></b>
+		  
+          
+        </td>
+      </tr>
+    </table>
+	</td>
+	</tr>
+	</table>
+    	
+    	
+  </body>
+</html>
+<script type="text/javascript">
+  Event.observe(window, 'unload', function() {
+    if (window.opener && !window.opener.closed) window.opener.location.href = window.opener.location.href;
+  });
+</script>

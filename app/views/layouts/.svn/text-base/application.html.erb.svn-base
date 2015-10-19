@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>AE-Task-Loci</title>
+  <%= stylesheet_link_tag 'web_app_theme', "themes/default/style" %>
+
+  <%= javascript_include_tag "prototype" %>
+  <%= javascript_include_tag "scriptaculous" %>
+  <% if params[:controller].include?('admin') %>
+    <%= active_scaffold_includes %>
+  <% else %>
+    <%= calendar_date_select_includes "silver" %>
+    <%= javascript_include_tag "calendar_date_select/format_db"%>
+    <%= stylesheet_link_tag "modalbox/modalbox" %>
+    <%= javascript_include_tag "modalbox/modalbox"%>
+  <% end %>
+
+</head>
+<body>
+  <div id="container">
+    <div id="header">
+    	<img src="../../../images/task-loci.png" alt="AE-Task-Loci" />
+      
+      <div id="user-navigation">
+        <div class="clear"></div>
+      </div>
+      <div id="main-navigation">
+        <ul>
+        <% if params[:controller].include?('admin') %>
+        <li><%= link_to "|Company|", "/admin/crud_companies"%></li>
+        <li><%= link_to "|Contact|", "/admin/crud_contacts"%></li>
+        <li><%= link_to "|Engineer|", "/admin/crud_engineers"%></li>
+        <li><%= link_to "|Project Manager|", "/admin/crud_project_managers"%></li>
+        <li><%= link_to "|Job Status|", "/admin/crud_job_statuses"%></li>
+        <li><%= link_to "|Job Type|", "/admin/crud_job_types"%></li>
+        <li><%= link_to "|Layout|", "/admin/crud_layouts"%></li>
+        <li><%= link_to "|Travel|", "/admin/crud_travels"%></li>
+        <li><%= link_to "|Handling|", "/admin/crud_handlings"%></li>		
+        <li><%= link_to "|Logout|", logout_path unless session[:user].blank? %></li>
+
+        <% else %>        
+        <li><%= link_to "|Projects|", projects_path%></li>        
+        <li><%= link_to "|Job Status Reports|", "/report/job_status"%></li>		
+		<li><%= link_to "|Invoice List|", "/report/invoice_list", :popup => ['Invoice List', 'width=1000,height=600,scrollbars=yes']%></li>
+		<li><%= link_to "|Company Database|", companies_path%></li>        
+		<li><%= link_to "|Annual Report|", "/report/salesreport"%></li>		
+        <li><%= link_to "|Admin|", admin_root_path if !session[:user].blank? && session[:user][:status] == "ADMIN" %></li>
+        <li><%= link_to "|Logout|", logout_path unless session[:user].blank? %></li>
+        <% end %>
+        </ul>
+        <div class="clear"></div>
+      </div>
+    </div>
+    <div id="wrapper">
+      <div class="flash">
+        <% flash.each do |type, message| -%>
+          <div class="message <%= type %>">
+            <p><%= message %></p>
+          </div>
+        <% end -%>
+      </div>
+      <div id="main">
+        <%= yield %>
+        <div id="footer">
+          <div class="block">
+            <p>Copyright &copy; 2010 Artistic Engineering</p>
+          </div>
+        </div>
+      </div>
+      <div id="sidebar">
+        <%= yield :sidebar %>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+</body>
+</html>

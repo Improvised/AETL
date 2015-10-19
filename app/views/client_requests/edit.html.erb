@@ -1,0 +1,12 @@
+<h2 class="title">Edit client request</h2>
+<div class="inner">
+  <p>
+    <% confirmation = @client_request.project.job_status_id == 2 ? '' : remote_function(:confirm => 'Do you want to change Job Status to "In Production"?', :url => {:controller => :projects, :action => :update_job_status, :id => @client_request.project.id}) %>
+    <%= link_to "Job Checklist", job_checklist_client_request_path(@client_request.id), :popup => ['Job_Checklist', 'width=1000,height=600,scrollbars=yes'] %> 
+	<%= link_to "Transmittal", transmittal_client_request_path(@client_request.id), :onclick => "window.open(this.href,'Transmittal','width=1000,height=600,scrollbars=yes');return false;" %>
+  </p>
+  <%= form_for @client_request, :html => {:class => :form} do |f| %>
+    <%= render :partial => 'client_request_form', :locals => {:f => f, :is_readonly => false} %>
+    <%= submit_tag :Update %>
+  <% end %>
+</div>

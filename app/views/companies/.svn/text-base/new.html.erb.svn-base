@@ -1,0 +1,7 @@
+<h2 class="title">Add new company</h2>
+<div class="inner">
+  <% form_tag({:action => :create}, {:class => :form}) do %>
+    <%= render :partial => 'company_form' %>
+    <%= submit_tag :Add %>
+  <% end %>
+</div>

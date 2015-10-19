@@ -1,0 +1,13 @@
+  <div class="content">
+    <h2 class="title">New Project</h2>
+    <div class="inner">
+      <% form_for @project, :html => {:class => :form} do |f|%>
+        <%= render :partial => "project_form", :locals => {:f => f, :is_readonly => false}%>
+        <div class="actions-bar">
+          <%= submit_tag "Create" %>
+          <div class="clear"/>
+        </div>
+      <% end -%>
+    </div>
+  </div>
+

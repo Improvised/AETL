@@ -1,0 +1,4 @@
+<option value="">Please select</option>
+<% @sales.each do |sale| %>
+  <option value="<%= sale.id %>"><%= sale.name %></option>
+<% end %>

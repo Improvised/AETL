@@ -1,0 +1,120 @@
+<div class="content">
+  <h2 class="title">Client Request List</h2>
+    <div class="inner">
+      <table class="table">
+        <tr>
+          <td>
+            <% field_set_tag '' do %>
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td width="100px">AE Job ID : </td>
+                    <td>
+                      <%= text_field_with_auto_complete :client_request, :ae_job_id, {:onkeypress => 'goToEditPage(event)'}, {:after_update_element => 'function(text, li){$("client_request_id").setValue(li.id);}'} %>
+                      <%= hidden_field_tag :client_request_id %>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <% form_tag :action => 'search' do %>
+              <% field_set_tag 'Find' do %>
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td width="100px">Find What : </td>
+                      <td><%= text_field_tag :find_what, params[:find_what] %></td>
+                    </tr>
+                    <tr>
+                      <td width="100px">Look In : </td>
+                      <td><%= select_tag :look_in, options_for_select(['CR Job ID', 'All Fields'], params[:look_in]) %></td>
+                    </tr>
+                    <tr>
+                      <td width="100px">Match : </td>
+                      <td><%= select_tag :match, options_for_select(['Any Part of Field', 'Whole Field', 'Start of Field'], params[:match]) %></td>
+                    </tr>
+                    <tr>
+                      <td width="100px">&nbsp;</td>
+                      <td><%= submit_tag 'Find' %></td>
+                    </tr>
+                  </tbody>
+                </table>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      </table>
+
+      <div class="actions-bar">
+        <div class="actions">
+          <%= link_to "Add New Request", new_client_request_path %>
+        </div>
+        <%= will_paginate @client_requests %>
+        <div class="clear"></div>
+      </div>
+      <table class="table">
+        <tr>
+          <td>
+            <table class="table">
+              <tr>
+                <th class="first">ID</th>
+                <th>AE Job ID</th>
+                <th class="last" width="300px">&nbsp;</th>
+              </tr>
+          <% if @client_requests.blank? %>
+              <tr>
+                <td colspan="3">No client request data available</td>
+              </tr>
+          <% else %>
+            <% @client_requests.each do |client_request| %>
+              <tr class="<%= cycle('odd', 'even') %>">
+                <td><%= client_request.id %></td>
+                <td><%= client_request.cr_job_id %></td>
+                <td class="last">
+                  <%= link_to :Edit, edit_client_request_path(client_request) %> |
+                  <%= link_to :Destroy, client_request_path(client_request), {:confirm => "Are you sure?",:method => :delete} %> |
+                  <% unless client_request.project.blank? %>
+                    <%= link_to "Job Checklist", edit_project_jobchecklists_path(client_request.project) %><br />
+                    <%= link_to "Job Checklist Report", job_checklist_client_request_path(client_request), :popup => ['Job Checklist', 'width=1000,height=600,scrollbars=yes'] %> |
+                    <% confirmation = client_request.project.job_status_id == 2 ? '' : remote_function(:confirm => 'Do you want to change Job Status to "In Production"?', :url => {:controller => :projects, :action => :update_job_status, :id => client_request.project.id}) %>
+                    <%= link_to "Transmittal", transmittal_client_request_path(client_request), :onclick => "window.open(this.href,'Transmittal','width=1000,height=600,scrollbars=yes');return false;" %>
+                  <% else %>
+                    <%= link_to_function "Job Checlist", 'alert("No Job Checklist available!")' %><br />
+                    <%= link_to_function "Job Checklist Report", 'alert("No Job Checklist available!")' %> |
+                    <%= link_to_function "Transmittal", 'alert("No Job Checklist available!")' %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <div class="actions-bar">
+        <div class="actions">
+          <%= link_to "Add New Request", new_client_request_path %>
+        </div>
+        <%= will_paginate @client_requests %>
+        <div class="clear"></div>
+      </div>
+    </div>
+</div>
+<script type="text/javascript">
+  //<![CDATA[
+  function goToEditPage(e){
+    var key = window.event ? window.event.keyCode : e.which;
+
+    if (key == 13 && $F('client_request_id') != "" && window.counter == 1 ) {
+      window.location = '/client_requests/' + $F('client_request_id') + '/edit';
+    } else if (key == 13 && window.counter == 1) {
+      window.counter = 0;
+    } else if (key == 13) {
+      window.counter = 1;
+    }
+  }
+</script>

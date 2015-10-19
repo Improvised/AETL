@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><%= @project.ae_job_id %> Job Checklist</title>
+    <%= javascript_include_tag "prototype" %>
+    <style type="text/css">
+      body {
+        font: 12pt Arial, serif;
+      }
+  	  hr {
+  		border: 2px solid #34647a;
+  		margin-top: 4px;
+  		margin-bottom: 2px;
+  		width: 100%;
+	  }
+      .underline {
+        border-bottom: 3px solid #000;
+	  }	
+	  .underline_2 {
+        border-bottom: 1px solid #000;
+      }	   
+	  table.sample td {
+		border-width: thin thin thin thin;
+		padding: 2px 2px 2px 2px;
+		border-style: inset inset inset inset;
+		border-color: rgb(52, 100, 122) rgb(52, 100, 122) rgb(52, 100, 122) rgb(52, 100, 122);
+		background-color: white;
+		-moz-border-radius: 0px 0px 0px 0px;
+	  }
+    </style>
+  </head>
+  <body>
+  	 <font face="intrepid" size=3> 
+      <script type="text/javascript">
+      <%= remote_function(:confirm => 'Do you want to change Job Status to "In Production"?', :url => {:action => :update_job_status, :id => @project.id}) unless @project.job_status_id == 2 || @project.job_status_id == 3 || @project.job_status_id == 4 || @project.job_status_id == 5 || @project.job_status_id == 6 || @project.job_status_id == 7 %>
+      if (window.opener && !window.opener.closed) window.opener.location.href = window.opener.location.href;
+      </script>
+      <table class "sample" align="center" width="790px">
+      <tr>
+        <td class="underline"><div align="center"><font color="#e98f24" size=6><b>Job Checklist <u>Light</u></b></font></div></td>
+      </tr>
+      <tr>
+        <td>
+          <table class="sample" width="100%">

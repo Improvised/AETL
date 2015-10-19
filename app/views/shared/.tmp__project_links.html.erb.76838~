@@ -1,0 +1,14 @@
+                <% unless ["edit", "action"].include?(params[:action]) %>
+                <%= link_to 'Edit', edit_project_path(project) %> | 
+                <% end %>
+                <%= link_to 'Destroy', project_path(project), {:method => :delete, :confirm => "Are you sure?"} %> | 
+                <% unless params[:controller] == 'jobchecklists' %>
+                <%= link_to "Job Checklist", (project.jobchecklist.blank?) ? new_project_jobchecklists_path(project) : edit_project_jobchecklists_path(project) %> | 
+                <% end %> 
+                <%= link_to "revision", revision_project_path({:id => project}) %> |
+                <%= link_to "Job Checklist Report", job_checklist_project_path(project), :popup => ['Job_Checklist', 'width=1000,height=600,scrollbars=yes'] %> |
+                <%= link_to "LT", job_checklist_light_project_path(project), :popup => ['LT', 'width=1000,height=600,scrollbars=yes'] %> |
+                <% confirmation = project.job_status_id == 2 ? '' : remote_function(:confirm => 'Do you want to change Job Status to "In Production"?', :url => {:controller => :projects, :action => :update_job_status, :id => project.id}) %>
+                <%= link_to "Transmittal", transmittal_project_path(project), :onclick => "window.open(this.href,'Transmittal','width=1000,height=600,scrollbars=yes');return false;" %> |
+				<%= link_to "PDF", controller.pdf_linker(project), :onclick => "window.open(this.href,'Transmittal','width=1400,height=900,scrollbars=yes');return false;" %> |				
+                <%= link_to "Job Folder", controller.job_folder_linker(project), :onclick => "window.open(this.href,'Transmittal','width=800,height=600,scrollbars=yes,menubar=yes');return false;" %>

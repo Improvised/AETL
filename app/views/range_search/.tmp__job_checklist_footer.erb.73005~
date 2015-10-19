@@ -1,0 +1,102 @@
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td class="underline">&nbsp;</td>
+      </tr>
+      <tr>
+        <td>
+          <table width="100%">
+            <tr>
+              <td colspan="3">Job Overview : <%= @project.jobchecklist.job_description unless @project.jobchecklist.nil? %></td>
+            </tr>
+            <tr>
+              <td colspan="3">Number of views : <%= @project.jobchecklist.views.size unless @project.jobchecklist.nil? %></td>
+            </tr>
+        <% unless @views.nil? %>
+          <% @views.each do |view| %>
+            <tr>
+              <td width="10%" valign="top"><% @i += 1 %><%= @i %>.</td>
+              <td valign="top">
+                <%= view.view %><br />
+                View <%= @i %> Notes : <%= view.notes %>
+              </td>
+              <td align="right" valign="top">
+                <%= view.time_of_day_shot.strftime("%m-%d-%Y %I:%M %p") unless view.time_of_day_shot.nil? %><br />
+                <%= view.field_of_view %> mm
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+            <tr>
+              <td colspan="3">Layout : <%= @project.jobchecklist.layout.name unless @project.jobchecklist.nil? or @project.jobchecklist.layout.nil? %></td>
+            </tr>
+            <tr>
+              <td colspan="3">Number of copies : <%= @project.jobchecklist.number_of_copies unless @project.jobchecklist.nil? %></td>
+            </tr>
+            <tr>
+              <td colspan="3">Notes : <%= @project.jobchecklist.notes unless @project.jobchecklist.nil? %></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td class="underline">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><div><span style="float:left">Engineer : </span><span class="underline" style="float:right;width:90%">&nbsp;</span></div></td>
+      </tr>
+      <tr>
+        <td><div><span style="float:left">Time Started/Completed : </span><span class="underline" style="float:right;width:76%">&nbsp;</span></div></td>
+      </tr>
+      <tr>
+        <td class="underline">&nbsp;</td>
+      </tr>
+      <tr>
+        <td>
+          <table width="100%">
+            <tr>
+              <td width="40%">Quality Control :</td>
+              <td width="20%" align="center"><u>Engineer</u></td>
+              <td width="20%" align="center"><u>Prod. Mgr.</u></td>
+              <td align="center"><u>Final</u></td>
+            </tr>
+            <tr>
+              <td>1. All Text (spelling, accuracy, etc.)</td>
+              <td class="underline">&nbsp;</td>
+              <td class="underline">&nbsp;</td>
+              <td class="underline">&nbsp;</td>
+            </tr>
+            <tr>
+              <td>2. Image Accuracy</td>
+              <td class="underline">&nbsp;</td>
+              <td class="underline">&nbsp;</td>
+              <td class="underline">&nbsp;</td>
+            </tr>
+            <tr>
+              <td>3. Client Requests (layouts, etc.)</td>
+              <td class="underline">&nbsp;</td>
+              <td class="underline">&nbsp;</td>
+              <td class="underline">&nbsp;</td>
+            </tr>
+            <tr>
+              <td>4. Map</td>
+              <td class="underline">&nbsp;</td>
+              <td class="underline">&nbsp;</td>
+              <td class="underline">&nbsp;</td>
+            </tr>
+            <tr>
+              <td>5. Image Quality (brightness, etc.)</td>
+              <td class="underline">&nbsp;</td>
+              <td class="underline">&nbsp;</td>
+              <td class="underline">&nbsp;</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td class="underline">&nbsp<div><%= will_paginate @views unless @views.nil? %><%= button_to_function "Print", "$(this).up().hide();window.print()"%></div></td>
+      </tr>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+<ul>
+<% unless @companieses.blank? %>
+  <% @companieses.each do |company| %>    
+	<li id="<%=company.id%>"><div><%= link_to company.name, edit_company_path(company.id) %></div></li>
+  <% end %>
+<% end %>
+</ul>

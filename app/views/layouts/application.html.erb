@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+  <title>Aepm</title>
+	
+  <%= stylesheet_link_tag "application" %>
+	<%= javascript_include_tag "application" %>
+  <%= csrf_meta_tag %>
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="header">
+    	<img src="/assets/task-loci.png" alt="AE-Task-Loci" />
+      
+      <div id="user-navigation">
+        <div class="clear"></div>
+      </div>
+      <div id="main-navigation">
+        <ul>
+  
+        <% if params[:controller].include?('admin') %>
+        <li><%= link_to "|HOME|", projects_path %></li>
+        <li><%= link_to "|Company|", "/admin/crud_companies"%></li>
+        <li><%= link_to "|Contact|", "/admin/crud_contacts"%></li>
+        <li><%= link_to "|Engineer|", "/admin/crud_engineers"%></li>
+        <li><%= link_to "|Project Manager|", "/admin/crud_project_managers"%></li>
+        <li><%= link_to "|Job Status|", "/admin/crud_job_statuses"%></li>
+        <li><%= link_to "|Job Type|", "/admin/crud_job_types"%></li>
+        <li><%= link_to "|Layout|", "/admin/crud_layouts"%></li>
+        <li><%= link_to "|Travel|", "/admin/crud_travels"%></li>
+        <li><%= link_to "|Handling|", "/admin/crud_handlings"%></li>		
+        <li><%= link_to "|Logout|", logout_path unless session[:user].blank? %></li>
+        
+        <% elsif params[:controller].include?('ewauser') %>
+        <li><%= link_to "|Company|", "/ewazap/ewa_companies"%></li>
+        
+        <% else %>        
+        <li><%= link_to "|Projects|", projects_path if !session[:user].blank? && session[:user][:status] == "ADMIN" %></li>        
+        <li><%= link_to "|Job Status Reports|", "/report/job_status" if !session[:user].blank? && session[:user][:status] == "ADMIN" %></li>
+        <li><%= link_to "|Invoice List|", "/report/invoice_list", remote: true, onclick: "window.open(this.href,'Invoice_List','width=1000,height=600,scrollbars=yes');return false;" if !session[:user].blank? && session[:user][:status] == "ADMIN" %></li>
+    		<li><%= link_to "|Company Database|", companies_path if !session[:user].blank? && session[:user][:status] == "ADMIN" %></li>   
+    		<li><%= link_to "|Range Search|", "/range_search" if !session[:user].blank? && session[:user][:status] == "ADMIN" %></li>		
+        <li><%= link_to "|Admin|", admin_path if !session[:user].blank? && session[:user][:status] == "ADMIN" %></li>
+        <li><%= link_to "|Home|", "/ewazap" if !session[:user].blank? && session[:user][:status] == "EWAUSER" %></li>        
+        <li><%= link_to "|Logout|", logout_path unless session[:user].blank? %></li>
+        <% end %>
+  
+        </ul>
+        <div class="clear"></div>
+      </div>
+    </div>
+    <div id="wrapper">
+      <div class="flash">
+        <% flash.each do |type, message| -%>
+          <div class="message <%= type %>">
+            <p><%= message %></p>
+          </div>
+        <% end %>
+      </div>
+      <div id="main">
+        <%= yield %>
+        <div id="footer">
+          <div class="block">
+            <p>Copyright &copy; <%= Time.now.year %> Artistic Engineering</p>
+          </div>
+        </div>
+      </div>
+      <div id="sidebar">
+        <%= yield :sidebar %>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+</body>
+
+</html>

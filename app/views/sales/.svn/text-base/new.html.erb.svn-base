@@ -1,0 +1,4 @@
+<% remote_form_for @sale, :update => :message do |f| %>
+  <p>Name : <%= f.text_field :name, :size => "25" %>  <%= submit_tag "Create" %>&nbsp;<span id="message"></span></p>
+<% end %>
+<p><%= link_to_remote "Close", :update => :account_manager_id, :url => {:controller => :sales}, :method => :get, :complete => "Modalbox.hide()" %></p>

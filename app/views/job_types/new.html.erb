@@ -1,0 +1,5 @@
+
+<%= form_for @job_type, :update => :message, remote: true do |f| %>
+  <p>Name : <%= f.text_field :name, :size => "25" %>  <%= submit_tag "Create" %>&nbsp;<span id="message"></span></p>
+<% end %>
+<p><%= link_to "Close", :update => :job_type_id, :url => {:controller => :job_types}, :method => :get, :complete => "Modalbox.hide()", remote: true %></p>

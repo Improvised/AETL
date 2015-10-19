@@ -1,0 +1,36 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# one:
+#   column: value
+#
+# two:
+#   column: value
+
+one:
+  id: 1
+  name: "In Pre-Production"
+
+two:
+  id: 2
+  name: "In Production"
+
+three:
+  id: 3
+  name: "Invoiced"
+
+four:
+  id: 4
+  name: "On Hold"
+
+five:
+  id: 5
+  name: "To Be Invoiced"
+
+six:
+  id: 6
+  name: "W/O PO--Completed"
+
+seven:
+  id: 7
+  name: "Waiting for PO / Contract"
+

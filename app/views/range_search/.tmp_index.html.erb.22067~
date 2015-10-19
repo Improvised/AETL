@@ -1,0 +1,160 @@
+<style type="text/css">
+        div.auto_complete {
+          width: 350px;
+          background: #fff;
+        }
+        div.auto_complete ul {
+          border:1px solid #888;
+          margin:0;
+          padding:0;
+          width:100%;
+          list-style-type:none;
+        }
+        div.auto_complete ul li {
+          margin:0;
+          padding:3px;
+        }
+        div.auto_complete ul li.selected {
+          background-color: #ffb;
+        }
+        div.auto_complete ul strong.highlight {
+          color: #800;
+          margin:0;
+          padding:0;
+        }
+</style>
+<div class="content">
+    <h2 class="title">Projects</h2>
+    <table class="table">
+      <tr>
+        <td>
+          
+          <table class="table">
+            <tbody>
+              <tr>
+                <td width="100px">AE Job ID : </td>
+                <td>
+                    <input type="text" onkeypress="goToEditPage(event)" size="30" name="project[ae_job_id]" id="project_ae_job_id" autocomplete="off"/>
+                    <div id="project_ae_job_id_auto_complete" class="auto_complete" style="display: none;"></div>
+
+                    <script type="text/javascript">
+                    //<![CDATA[
+                        function goToEditPage(e){
+                            var key;
+                            if(window.event)
+                                key = window.event.keyCode;
+                            else
+                                key = e.which;
+
+                            if (key == 13 && $F('project_id') != "" && window.counter == 1 ) {
+                                window.location = "/projects/"+ $F('project_id') +"/edit";
+                            } else if (key == 13 && window.counter == 1) {
+                                window.counter = 0;
+                            } else if (key == 13) {
+                                window.counter = 1;
+                            }
+                        }
+                        
+                        var project_ae_job_id_auto_completer = new Ajax.Autocompleter('project_ae_job_id', 
+                            'project_ae_job_id_auto_complete', '/projects/auto_complete_for_project_ae_job_id', {
+                            afterUpdateElement : getSelectionId
+                        });
+                        
+                        function getSelectionId(text, li) {
+                            $('project_id').setValue(li.id);
+                           // window.location = "/projects/"+ li.id +"/edit";
+                        }
+                    //]]>
+                    </script>
+                    <%= hidden_field_tag :project_id %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <% form_tag({:action => 'search'}, {:method => :get}) do %>
+            <% field_set_tag 'Find' do %>
+          <table class="table">
+            <tbody>
+              <tr>
+                <td width="100px">Job Status : </td>
+                <td><%= select_tag 'job_status', options_for_select([ ['All Jobs'], ['Active'], ['Inactive']], params[:job_status]), :onchange => "this.form.submit()" %></td>
+              </tr>
+              <tr>
+                <td width="100px">Find What : </td>
+                <td><%= text_field_tag :find_what, params[:find_what] %></td>
+              </tr>
+              <tr>
+                <td width="100px">Look In : </td>
+                <td><%= select_tag 'field', options_for_select([['Project Number', 'number'], ['Project Name', 'name'], ['Company', 'company'], ['Address', 'address_line_1'], ['Contact', 'contact'], ['All Fields', 'All Fields']], params[:field]) %></td>
+              </tr>
+              <tr>
+                <td width="100px">Match : </td>
+                <td><%= select_tag 'match', options_for_select(['Any Part of Field', 'Whole Field'], params[:match]) %></td>
+              </tr>
+              <tr>
+                <td width="100px">&nbsp;</td>
+                <td><%= submit_tag 'Find' %></td>
+              </tr>
+            </tbody>
+          </table>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+    </table>
+    <div class="inner">
+      <div class="actions-bar">
+        <div class="actions">
+          <%= link_to "Add project", new_project_path %>
+        </div>
+        <%= will_paginate @projects %>
+        <div class="clear" />
+      </div>
+      <br />
+      <table class="table">
+        <tbody>
+          <tr>            
+            <th>AE job ID</th>
+			  <th>Project Name</th>
+			<th>Project Number</th>
+			<th>Carrier</th>
+          
+            <th>Company Name</th>
+			<th>Contact</th>
+			<th>Status</th>
+            <th class="last"><img src="../../images/edits.png" /> </th>
+          </tr>
+          <% if @projects.blank? %>
+          <tr>
+            <td colspan="5">No project data available</td>
+          </tr>
+          <% else %>
+            <% @projects.each do |project| %>
+          <tr class="<%= cycle('odd', 'even') %>">
+            <td align="center" width="100"><%=h project.ae_job_id %></td>
+			<td td width="160"><%=h project.name %></td>
+			<td width="140"><%=h project.number %></td>
+			<td width="150"><%=h project.jobchecklist.carrier.name if (!project.jobchecklist.blank? && !project.jobchecklist.carrier.blank?) %></td>            
+            <td width="160"><%=h project.company.name unless project.company.blank? %></td>
+			<td width="150"><%=h project.contact.name unless project.contact.nil? %></td>
+			<td><%=h project.job_status.name unless project.job_status.nil? %></td>
+            <td class="last" width="310px">
+              <%= render :partial => "/shared/project_links", :locals => {:project => project}%>
+            </td>
+          </tr>
+            <% end -%>
+          <% end -%>
+        </tbody>
+      </table>
+      <div class="actions-bar">
+        <%= link_to "Add project", new_project_path %>
+        <%= will_paginate @projects %>
+        <div class="clear" />
+      </div>
+    </div>
+  </div>

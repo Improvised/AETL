@@ -1,0 +1,4 @@
+<option value="">Please select</option>
+<% @travels.each do |travel| %>
+  <option value="<%= travel.id %>"><%= travel.name %></option>
+<% end %>

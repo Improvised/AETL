@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/aepm_aesims/!svn/ver/73/app/views/client_requests
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/aepm_aesims/!svn/ver/24/app/views/client_requests/new.html.erb
+END
+transmittal.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/aepm_aesims/!svn/ver/57/app/views/client_requests/transmittal.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/aepm_aesims/!svn/ver/24/app/views/client_requests/show.html.erb
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/aepm_aesims/!svn/ver/73/app/views/client_requests/edit.html.erb
+END
+_client_request_form.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/aepm_aesims/!svn/ver/57/app/views/client_requests/_client_request_form.html.erb
+END
+_client_request_reference.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/aepm_aesims/!svn/ver/28/app/views/client_requests/_client_request_reference.html.erb
+END
+_drop_down_contact.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/aepm_aesims/!svn/ver/3/app/views/client_requests/_drop_down_contact.html.erb
+END
+contact_by_company.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/aepm_aesims/!svn/ver/3/app/views/client_requests/contact_by_company.html.erb
+END
+job_checklist.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/aepm_aesims/!svn/ver/57/app/views/client_requests/job_checklist.html.erb
+END
+_client_request_ae_job_id.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/aepm_aesims/!svn/ver/62/app/views/client_requests/_client_request_ae_job_id.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/aepm_aesims/!svn/ver/73/app/views/client_requests/index.html.erb
+END

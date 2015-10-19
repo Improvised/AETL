@@ -1,0 +1,53 @@
+
+
+    <div class="inner">
+      <div class="actions-bar">
+
+        <%= will_paginate @salesreport %>
+        <div class="clear" />
+      </div>
+      <br />
+      <table class="table">
+        <tbody>
+          <tr>
+            
+            <th>AE job ID</th>
+			<th>Project Number</th>
+            <th>Project Name</th>
+            <th>Company Name</th>
+			<th>Client Name</th>
+			<th>Carrier</th>
+			<th>Job Type</th>
+			<th># of Views</th>
+            <th class="last"> </th>
+          </tr>
+          <% if @salesreport.blank? %>
+          <tr>
+            <td colspan="5">No project data available</td>
+          </tr>
+          <% else %>
+            <% @salesreport.each do |project| %>
+          <tr class="<%= cycle('odd', 'even') %>">
+            
+            <td><%=h project.ae_job_id %></td>
+			<td><%=h project.number %></td>
+            <td><%=h project.name %></td>
+            <td><%=h project.company.name unless project.company.blank? %></td>
+			<td><%=h project.contact.name unless project.contact.nil? %></td>
+			<td><%=h project.jobchecklist.carrier.name if (!project.jobchecklist.blank? && !project.jobchecklist.carrier.blank?) %></td>
+			<td><%=h project.job_type.name unless project.job_type.nil? %></td>
+			<td><b><%=h project.jobchecklist.views.size unless project.jobchecklist.nil? %></b></td>			
+            <td class="last" width="300px">
+              
+            </td>
+          </tr>
+            <% end -%>
+          <% end -%>
+        </tbody>
+      </table>
+      <div class="actions-bar">        
+        <%= will_paginate @salesreport %>
+        <div class="clear" />
+      </div>
+    </div>
+  </div>

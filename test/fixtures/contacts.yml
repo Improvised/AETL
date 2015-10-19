@@ -1,0 +1,23 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# one:
+#   column: value
+#
+# two:
+#   column: value
+#
+one:
+   id: 1
+   company_id: 1
+   name: "Sergey"
+   phone: "734-34095"
+   fax: "734-34095"
+   email: "sergey@sergey.com"
+
+two:
+   id: 2
+   company_id: 2
+   name: "Boris"
+   phone: "754-74545"
+   fax: "794-31298"
+   email: "boris@boris.com"

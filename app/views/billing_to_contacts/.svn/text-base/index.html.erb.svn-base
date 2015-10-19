@@ -1,0 +1,7 @@
+<option value="">Please select</option>
+<% @contacts.each do |contact| %>
+  <option value="<%= contact.id %>"><%= contact.name %></option>
+<% end %>
+<option value="967">Accounts Payable</option>
+
+

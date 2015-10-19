@@ -1,0 +1,11 @@
+                <% unless ["edit", "action"].include?(params[:action]) %>
+                <%= link_to 'Edit', edit_project_path(project) %> | 
+                <% end %>
+                <%= link_to 'Destroy', project_path(project), {:method => :delete, :confirm => "Are you sure?"} %> | 
+                <% unless params[:controller] == 'jobchecklists' %>
+                <%= link_to "Job Checklist", (project.jobchecklist.blank?) ? new_project_jobchecklists_path(project) : edit_project_jobchecklists_path(project) %> | 
+                <% end %> 
+                <%= link_to "revision", revision_project_path({:id => project}) %> |
+                <%= link_to "Job Checklist Report", job_checklist_project_path(project), :popup => ['Job Checklist', 'width=1000,height=600,scrollbars=yes'] %> |
+                <%= link_to "LT", job_checklist_light_project_path(project), :popup => ['LT', 'width=1000,height=600,scrollbars=yes'] %> |
+                <%= link_to "Transmittal", transmittal_project_path(project), :popup => ['Transmittal', 'width=1000,height=600,scrollbars=yes'] %>

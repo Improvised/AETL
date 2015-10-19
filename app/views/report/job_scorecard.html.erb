@@ -1,0 +1,36 @@
+<%= javascript_include_tag "calendar_date_select" %>
+<% CalendarDateSelect.format=(:iso_date) %>
+<%= stylesheet_link_tag "calendar_date_select" %>
+<h2 class="title">Job Scorecard</h2>
+<div class="inner">
+  <%= form_tag({:action => :do_job_scorecard}, {:class => :form}) do %>
+    <table class="table">
+      <tr>
+        <td>
+          <table class="table">
+            <tbody>
+              <tr>
+                <td width="100px">By Company</td>
+                <td>
+                  <%= select_tag "company_id", options_for_select([["Please select", ""]] + @companies.map{|c| [c.name, c.id]}, params[:company_id]), :onchange => remote_function(:update => "contact", :url => {:action => "contact_by_company"}, :with => "'id='+$F(this)+'&method_type=contact_id'") %>
+                </td>
+              </tr>
+              <tr>
+                <td width="100px">Contact</td>
+                <td id="contact"><%= render :partial => "drop_down_contact", :locals => {:method => 'contact_id', :contacts => @contacts} %></td>
+              </tr>
+              <tr>
+                <td width="100px">By Date</td>
+                <td>
+                  From : <%= calendar_date_select_tag "date_in", nil %>
+                  To : <%= calendar_date_select_tag "due_date", nil %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <%= submit_tag "Get Report" %>
+  <% end %>
+</div>

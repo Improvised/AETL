@@ -1,0 +1,7 @@
+<% remote_form_for @layout, :update => :message do |f| %>
+  <p>Name : <%= f.text_field :name, :size => "25" %>&nbsp;<span id="message"></span></p>
+  <p>Tabloid : <%= f.check_box :tabloid %></p>
+  <p>Landscape : <%= f.check_box :landscape %></p>
+  <p><%= submit_tag "Create" %></p>
+<% end %>
+<p><%= link_to_remote "Close", :update => :jobchecklist_layout_id, :url => {:controller => :layouts}, :method => :get, :complete => "Modalbox.hide()" %></p>

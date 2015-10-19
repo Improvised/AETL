@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/aepm_aesims/!svn/ver/27/app/views/contacts
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/aepm_aesims/!svn/ver/27/app/views/contacts/new.html.erb
+END
+create.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/aepm_aesims/!svn/ver/27/app/views/contacts/create.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/aepm_aesims/!svn/ver/27/app/views/contacts/index.html.erb
+END

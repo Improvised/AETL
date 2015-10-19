@@ -1,0 +1,44 @@
+<%= render :partial => "job_checklist_header" %>
+            <tr>
+              <td width="25%">Site Name : </td>
+              <td width="25%"><%= @project.name %></td>
+              <td width="25%">AE Job ID : </td>
+              <td><%= @project.ae_job_id %></td>
+            </tr>
+            <tr>
+              <td>Site Number : </td>
+              <td><%= @project.number %></td>
+              <td>Company : </td>
+              <td><%= @project.company.name unless @project.company.nil? %></td>
+            </tr>
+            <tr>
+              <td>Carrier : </td>
+              <td><%= @project.jobchecklist.carrier.name if (!@project.jobchecklist.blank? && !@project.jobchecklist.carrier.blank?) %></td>
+              <td>Date Received : </td>
+              <td><%= @project.date_in.strftime("%m-%d-%Y") unless @project.date_in.blank? %></td>
+            </tr>
+            <tr>
+              <td>Site Address : </td>
+              <td><%= @project.address_line_1 %></td>
+              <td>Due Date : </td>
+              <td><%= @project.due_date.strftime("%m-%d-%Y") unless @project.due_date.blank? %></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td><%= @project.address_line_2 %></td>
+              <td>Contact : </td>
+              <td><%= @project.contact.name unless @project.contact.nil? %></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td><%= @project.city %>, <%= @project.state %> <%= @project.zip %></td>
+              <td>Job Type : </td>
+              <td><%= @project.job_type.name unless @project.job_type.nil? %></td>
+            </tr>
+            <tr>
+              <td>Project Manager : </td>
+              <td><%= @project.employee_project_manager.name unless @project.employee_project_manager.nil? %></td>
+              <td>Handling : </td>
+              <td><%= @project.handling.name unless @project.handling.nil? %></td>
+            </tr>
+<%= render :partial => "job_checklist_footer" %>

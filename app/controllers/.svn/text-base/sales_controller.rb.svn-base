@@ -1,0 +1,21 @@
+class SalesController < ApplicationController
+  def index
+    @sales = Sale.all
+    render :layout => false
+  end
+
+  def new
+    @sale = Sale.new
+    render :layout => false
+  end
+
+  def create
+    @sale = Sale.new(params[:sale])
+
+    if @sale.save
+      render :text => 'Account manager was added', :layout => false and return
+    end
+
+    render :layout => false
+  end
+end

@@ -1,0 +1,7 @@
+<ul>
+<% unless @projects.blank? %>
+  <% @projects.each do |project| %>
+    <li><%= link_to_function project.ae_job_id, "$('client_request_project_id').value='" + project.id.to_s + "'" %></li>
+  <% end %>
+<% end %>
+</ul>

@@ -1,0 +1,36 @@
+<%= render :partial => "job_checklist_light_header" %>
+            <tr>
+              <td width="25%"><font color="#34647a">Site Name:</font> </td>
+              <td><b><%= @project.name %></b></td>
+            </tr>
+            <tr>
+              <td><font color="#34647a">Site Number:</font> </td>
+              <td><b><%= @project.number %></b></td>
+            </tr>
+            <tr>
+              <td><font color="#34647a">AE Job ID:</font> </td>
+              <td><b><%= @project.ae_job_id %></b></td>
+            </tr>
+            <tr>
+              <td><font color="#34647a">Site Address:</font> </td>
+              <td><%= @project.address_line_1 %></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td><%= @project.address_line_2 %></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td><%= @project.city %>, <%= @project.state %> <%= @project.zip %></td>
+            </tr>
+            <tr>
+              <td><font color="#34647a">Project Manager:</font> </td>
+              <td><%= @project.employee_project_manager.name unless @project.employee_project_manager.nil? %></td>
+            </tr>
+<%= render :partial => "job_checklist_footer" %>
+
+<script type="text/javascript">
+  Event.observe(window, 'unload', function() {
+    if (window.opener && !window.opener.closed) window.opener.location.href = window.opener.location.href;
+  });
+</script>

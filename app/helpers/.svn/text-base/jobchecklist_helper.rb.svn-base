@@ -1,0 +1,2 @@
+module JobchecklistHelper
+end

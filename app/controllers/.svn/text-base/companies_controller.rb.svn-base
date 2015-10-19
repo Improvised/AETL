@@ -1,0 +1,75 @@
+class CompaniesController < ApplicationController
+  before_filter :prepare_data, :except => [:index, :destroy, :delete_contact]
+
+  def index
+    @companies = Company.paginate :page => params[:page] || 1, :per_page => COUNT_PER_PAGE, :order => :name
+  end
+
+  def new
+    @company = Company.new
+    @contacts = []
+  end
+
+  def create
+    @company = Company.new(params[:company])
+    @contacts = []
+    params[:contact][:name].each_with_index do |x, i|
+      if !(x.blank? && params[:contact][:phone][i].blank? && params[:contact][:fax][i].blank? && params[:contact][:email][i].blank?)
+        @contacts << Contact.new({:name => x, :phone => params[:contact][:phone][i], :fax => params[:contact][:fax][i], :email => params[:contact][:email][i]})
+      end
+    end
+    if @company.save
+      @company.contacts = @contacts
+      flash[:message] = "Company created succesfully"
+      redirect_to companies_path and return
+    end
+    render :action => 'new'
+  end
+
+  def edit
+    @company = Company.find(params[:id])
+    @contacts = @company.contacts
+  end
+
+  def update
+    @company = Company.find(params[:id])
+    @contacts = @company.contacts.clone
+    params[:contact][:name].each_with_index do |x, i|
+      if !(x.blank? && params[:contact][:phone][i].blank? && params[:contact][:fax][i].blank? && params[:contact][:email][i].blank?)
+        @contacts << Contact.new({:name => x, :phone => params[:contact][:phone][i], :fax => params[:contact][:fax][i], :email => params[:contact][:email][i]})
+      end
+    end
+    if @company.update_attributes(params[:company])
+      @company.contacts = @contacts
+      flash[:message] = 'Company updated succesfully'
+      redirect_to edit_company_path(@company)and return
+    end    
+    
+    render :action => 'edit', :id => params[:id]
+  end
+
+  def destroy
+    Company.find(params[:id]).destroy
+    flash[:message] = 'Company deleted succesfully'
+    redirect_to companies_path
+  end
+
+  def delete_contact
+    @contact = Contact.find(params[:id])
+    @contact.destroy
+    flash[:message] = 'Company contact deleted succesfully'
+    redirect_to :action => 'edit', :id => @contact.company
+  end
+  
+  def auto_complete_for_company_name
+    search = params[:company]
+    @companieses = Company.find(:all, :conditions => ["name LIKE ?", "%" + search + "%"], :limit => 10, :order => "name ASC")
+    render :partial => "company_name"
+  end
+
+  private
+  def prepare_data
+    @companies = Company.all(:order => :name)
+    @sales = Sale.all(:order => :name)
+  end
+end

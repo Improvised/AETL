@@ -1,0 +1,21 @@
+class EmployeeProductionsController < ApplicationController
+  def index
+    @employee_productions = EmployeeProduction.all
+    render :layout => false
+  end
+
+  def new
+    @employee_production = EmployeeProduction.new
+    render :layout => false
+  end
+
+  def create
+    @employee_production = EmployeeProduction.new(params[:employee_production])
+
+    if @employee_production.save
+      render :text => 'Engineer was added', :layout => false and return
+    end
+
+    render :layout => false
+  end
+end

@@ -1,0 +1,187 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/fixtures.html
+
+# one:
+#   column: value
+#
+# two:
+#   column: value
+one:
+  id: 1
+  name: "Airtouch"
+
+two:
+  id: 2
+  name: "Alpine PCs"
+
+three:
+  id: 3
+  name: "American tower Corporation"
+
+four:
+  id: 4
+  name: "At&t Wireless"
+
+five:
+  id: 5
+  name: "California Water service Company"
+
+six:
+  id: 6
+  name: "Cingular"
+
+seven:
+  id: 7
+  name: "City of Anaheim"
+
+eight:
+  id: 8
+  name: "City of fullerton"
+
+nine:
+  id: 9
+  name: "City of West Hollywood"
+
+ten:
+  id: 10
+  name: "Clearwire"
+
+eleven:
+  id: 11
+  name: "Cricket"
+
+twelve:
+  id: 12
+  name: "Crown Castle"
+
+thirteen:
+  id: 13
+  name: "edge Wireless"
+
+fourteen:
+  id: 14
+  name: "flo tV"
+
+fifteen:
+  id: 15
+  name: "Global tower Partners"
+
+sixteen:
+  id: 16
+  name: "Horizon tower"
+
+seventeen:
+  id: 17
+  name: "insite Connect"
+
+eighteen:
+  id: 18
+  name: "insite towers, LCC"
+
+nineteen:
+  id: 19
+  name: "MediafLO UsA"
+
+twenty:
+  id: 20
+  name: "Meridian telecom"
+
+twentyone:
+  id: 21
+  name: "Metro PCs"
+
+twentytwo:
+  id: 22
+  name: "Mobilitie"
+
+twentythree:
+  id: 23
+  name: "Modeo"
+
+twentyfour:
+  id: 24
+  name: "Mountain Union telecom"
+
+twentyfive:
+  id: 25
+  name: "nextel"
+
+twentysix:
+  id: 26
+  name: "Pacific Bell"
+
+twentyseven:
+  id: 27
+  name: "PG&e"
+
+twentyeight:
+  id: 28
+  name: "Royal street Communications California, LLC"
+
+twentynine:
+  id: 29
+  name: "Royal street Communications, LLC"
+
+thirty:
+  id: 30
+  name: "sBA"
+
+thirtyone:
+  id: 31
+  name: "sirius"
+
+thirtytwo:
+  id: 32
+  name: "skyPower"
+
+thirtythree:
+  id: 33
+  name: "sMs"
+
+thirtyfour:
+  id: 34
+  name: "spectra site"
+
+thirtyfive:
+  id: 35
+  name: "spectrasite Communications"
+
+thirtysix:
+  id: 36
+  name: "sprint"
+
+thirtyseven:
+  id: 37
+  name: "sunedison"
+
+thirtyeight:
+  id: 38
+  name: "sunpower"
+
+thirtynine:
+  id: 39
+  name: "t Mobile"
+
+forty:
+  id: 40
+  name: "tallac tower Group"
+
+fortyone:
+  id: 41
+  name: "teligent"
+
+fortytwo:
+  id: 42
+  name: "turnkey"
+
+fortythree:
+  id: 43
+  name: "Verizon"
+
+fortyfour:
+  id: 44
+  name: "Voice stream"
+
+fortyfive:
+  id: 45
+  name: "XO Wireless"
+

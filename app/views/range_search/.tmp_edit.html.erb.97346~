@@ -1,0 +1,15 @@
+  <div class="content">
+    <h2 class="title">Edit Project</h2>
+    <div class="inner">
+      <p>
+        <%= render :partial => "shared/project_links", :locals => {:project => @project} %>
+      </p>
+      <% form_for @project, :html => {:class => :form} do |f|%>
+        <%= render :partial => "project_form", :locals => {:f => f, :is_readonly => false}%>
+        <div class="actions-bar">
+          <%= submit_tag "Update" %>
+          <div class="clear"/>
+        </div>
+      <% end -%>
+    </div>
+  </div>

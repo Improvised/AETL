@@ -1,0 +1,134 @@
+<style type="text/css">
+        div.auto_complete {
+          width: 350px;
+          background: #fff;
+        }
+        div.auto_complete ul {
+          border:1px solid #888;
+          margin:0;
+          padding:0;
+          width:100%;
+          list-style-type:none;
+        }
+        div.auto_complete ul li {
+          margin:0;
+          padding:3px;
+        }
+        div.auto_complete ul li.selected {
+          background-color: #ffb;
+        }
+        div.auto_complete ul strong.highlight {
+          color: #800;
+          margin:0;
+          padding:0;
+        }
+
+.mywhite a{color:white;}	  
+</style>
+
+<h2 class="title" align="center">EWA Access Point</h2>
+<div class="inner">
+	
+	          <%= form_tag({:action => 'search'}, {:method => :get}) do %>
+            <%= field_set_tag 'Find Sites' do %>
+          <table class="table">
+            <tbody>
+
+                <td width="100px">Find What: </td>
+                <td><%= text_field_tag :find_what, params[:find_what] %></td>
+              </tr>
+              
+                <td width="100px">Match: </td>
+                <td><%= select_tag 'match', options_for_select(['Broad Match', 'Exact Match'], params[:match]) %></td>
+              </tr>
+              <tr>
+                <td width="100px">&nbsp;</td>
+                <td><%= submit_tag 'Find' %></td>
+              </tr>
+            </tbody>
+          </table>
+            <% end %>
+          <% end %>
+	
+  <table class="table">
+  		    <tr bgcolor="#e57d00">
+      <td>
+
+      </td>
+    <tr><td>
+    <div class="inner">
+     <div class="actions-bar">
+		<span style="float:left"><u><b>Projects total since 2000:</b></u> <font size="4"><b> <%= number_with_delimiter(@alljsize, :delimiter => ',') %></b></font></span>
+		<span style="float:right"></span>			
+        <%= will_paginate @jobs_all %>
+     </div><br>
+     <%= link_to "Export most recent 500 jobs to Excel -->", '/ewazap/export_to_csv/' %> (Note: It takes a few minutes to generate)
+    </td></tr>
+    <tr>
+      <td>        	    	
+        <table class="mywhite">          
+            <tr>
+              <th>AE Job ID</th>
+              <th>Job Name</th>
+              <th>Project Number</th>
+              <th>City</th>	
+              <th>Carrier</th>
+              <th>Full Address</th>
+              <th>Job Type</th>
+              <th>Job Description</th>
+              <th class="last">PDFs (Sims and/or ZDs)</th>
+            </tr>  
+          <tbody>  
+      
+        <% @jobs_all.each do |job| %>
+            <tr class="<%= cycle('odd', 'even') %>">
+              <td width="120"><%= job.ae_job_id unless job.ae_job_id.blank? %></td>
+              <td width="240"><%= job.name unless job.name.blank? %></td>
+              <td width="170"><%= job.number unless job.number.blank? %></td>
+              <td width="240"><%= job.city unless job.city.blank? %></td>			  
+			  <td width="240"><%=h job.jobchecklist.carrier.name if (!job.jobchecklist.blank? && !job.jobchecklist.carrier.blank?) %></td>
+			  <td width="325"><%= job.address_line_1 unless job.address_line_1.blank? %>, <br> <%= job.city unless job.city.blank? %>, <%= job.state unless job.state.blank? %> <%= job.zip unless job.zip.blank? %></td>
+			  <td width="100"><%= job.job_type.name unless job.job_type.blank? %></td>
+			  <td width="450"><%=h job.jobchecklist.job_description if (!job.jobchecklist.blank? && !job.jobchecklist.job_description.blank?) %></td>
+			  
+             <td width="320px" align="left">
+                <%= render :partial => "/shared/project_links_ewa", :locals => {:project => job}%>
+              </td>
+            </tr>
+        <% end %>
+    
+          </tbody>
+        </table>
+        
+      </td>
+      
+    </tr>
+		    <tr>
+      <td>
+		<br><br>
+      </td>
+    </tr>
+	
+	    <tr bgcolor="#e57d00">
+      <td>
+
+      </td>
+    </tr>
+    <tr>
+      <td>
+       
+      </td>
+    </tr>
+	
+	
+	
+    <tr>
+      <td>
+      
+      </td>
+    </tr>
+  </table>
+        <div class="actions-bar">        
+        <%= will_paginate @jobs_all %>
+        <div class="clear" />
+</div>

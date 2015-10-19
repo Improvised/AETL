@@ -1,0 +1,4 @@
+<option value="">Please select</option>
+<% @layouts.each do |layout| %>
+  <option value="<%= layout.id %>"><%= layout.name %></option>
+<% end %>

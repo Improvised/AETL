@@ -1,0 +1,30 @@
+  <div class="content">
+    <h2 class="title">New Project</h2>
+    <div class="inner">
+      <%= form_for @project, :html => {:class => :form} do |f|%>
+        <%= render :partial => "project_form_new", :locals => {:f => f, :is_readonly => false}%>
+        <div class="actions-bar">
+          <%= submit_tag "Create" %><br><br>
+          <div class="clear"/>
+        </div>
+      <% end -%>
+    </div>
+  </div>
+
+
+<% %w(sales employeeProduction employeeProjectManager contactCompany contactCompanyBilling).each do |name| %>
+
+  <div class="modal fade in" id="<%= name %>Modal" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body" id="<%= name %>Body">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% end %>

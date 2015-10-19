@@ -1,0 +1,5 @@
+
+<%= form_for @employee_production, url:employee_productions_url, remote: true, method: :post do |f| %>
+  <p>Name : <%= f.text_field :name, :size => "25" %>  <%= submit_tag "Create" %>&nbsp;<span id="message"></span></p>
+<% end %>
+<p></p>

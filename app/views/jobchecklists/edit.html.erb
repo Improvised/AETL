@@ -1,0 +1,23 @@
+  <div class="content">
+    <h2 class="title">Edit Job Checklist AE job ID = <%= @project.ae_job_id %></h2>
+    <div class="inner">
+  <td>
+     <% x = @jobchecklist  %>
+      <%= link_to image_tag("edit.png", :border=>0), edit_project_path(x.project) %> 
+      <%= link_to image_tag("checklist.png", :border=>0), job_checklist_project_path(x.project), :popup => ['JobChecklist', 'width=1000,height=600,scrollbars=yes'] %> 
+      <%= link_to image_tag("checklistlt.png", :border=>0), job_checklist_light_project_path(x.project), :popup => ['LT', 'width=1000,height=600,scrollbars=yes'] %> 
+	  <%= link_to image_tag("pdf.png", :border=>0), controller.pdf_linker(x.project), :onclick => "window.open(this.href,'Transmittal','width=1400,height=900,scrollbars=yes');return false;" %> 				
+      <%= link_to image_tag("folder-icon.png", :border=>0), controller.job_folder_linker(x.project), :onclick => "window.open(this.href,'Transmittal','width=800,height=600,scrollbars=yes');return false;" %>
+	  
+  </td>
+      <%= form_for @jobchecklist, :url => project_jobchecklists_path, :html => {:class => :form, :method => :put} do |f|%>
+        <%= render :partial => "jobchecklist_form", :locals => {:f => f, :is_readonly => false, :views => @view_jobchecklists}%>
+        <div class="actions-bar">
+          <%= submit_tag "Update" %> | <%= link_to 'Destroy', project_path(@project), {:method => :delete, :confirm => "Are you sure?"} %>
+          <div class="clear"/>
+        </div>
+      <% end -%>
+      
+    </div>
+  </div>
+

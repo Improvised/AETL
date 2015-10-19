@@ -1,0 +1,24 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# one:
+#   column: value
+#
+# two:
+#   column: value
+one:
+  id: 1
+  project_id: 1
+  carrier_id: 1
+  employee_project_manager_id: 1
+  job_description: "Existing screens are going to be extending, and model new equip building."
+  number_of_copies: "5"
+  layout_id: 1
+
+two:
+  id: 2
+  project_id: 2
+  carrier_id: 2
+  employee_project_manager_id: 2
+  job_description: "3 sets of 2 1x4 panel antennas & addition on trash enclosure"
+  number_of_copies: "1"
+  layout_id: 2

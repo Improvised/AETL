@@ -1,0 +1,14 @@
+  <div class="content">
+    <h2 class="title">Revision</h2>
+    <div class="inner">
+      <% form_for @project, :url => create_revision_project_path, :html => {:class => :form} do |f|%>
+        <%= render :partial => "project_form", :locals => {:f => f, :is_readonly => true}%>
+        <%= render :partial => "revision_options"%>
+        <div class="actions-bar">
+          <%= submit_tag "Create Revision", :disable_with => "Please wait..." %>
+          <div class="clear"/>
+        </div>
+      <% end -%>
+    </div>
+  </div>
+

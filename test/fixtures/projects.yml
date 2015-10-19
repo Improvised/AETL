@@ -1,0 +1,66 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# one:
+#   column: value
+#
+# two:
+#   column: value
+one:
+  id: 1
+  ae_job_id: "2009-0111"
+  name: "Los Angeles Sports Arena"
+  number: "c840"
+  address_line_1: "17 Miles south of Barshow"
+  address_line_2: "8477 Telegraph Road"
+  city: "Irvine"
+  state: "CA"
+  zip: "92715"
+  company_id: 1
+  account_manager_id: 1
+  date_in: "2009-11-01"
+  due_date: "2009-11-15"
+  job_status_id: 2
+  employee_production_id: 1
+  production_hour: "0"
+  mileage: "0"
+  employee_project_manager_id: 1
+  project_manager_hour:
+  job_type_id: 1
+  handling_id: 1
+  travel_id: 1
+  billing_to_company_id: 1
+  billing_to_contact_id: 1
+  billing_note: "Revise only 1st 3 views"
+  price: "$410.00"
+  invoice_number: "1426"
+  job_history: "2000-0078"
+
+two:
+  id: 2
+  ae_job_id: "2009-0112"
+  name: "Shermanga Canyon"
+  number: "C995"
+  address_line_1: "11105 Mountain View"
+  address_line_2: "1421 Edinger Avenue"
+  city: "Palo Alto"
+  state: "CA"
+  zip: "92618"
+  company_id: 2
+  account_manager_id: 2
+  date_in: "2009-11-25"
+  due_date: "2009-11-30"
+  job_status_id: 3
+  employee_production_id: 2
+  production_hour: "0"
+  mileage: "0"
+  employee_project_manager_id: 2
+  project_manager_hour:
+  job_type_id: 2
+  handling_id: 2
+  travel_id: 2
+  billing_to_company_id: 2
+  billing_to_contact_id: 2
+  billing_note: "Pics on Birds Comp"
+  price: "$606.00"
+  invoice_number: "1427"
+  job_history: "2000-0193"

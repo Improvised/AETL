@@ -1,0 +1,22 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# one:
+#   column: value
+#
+# two:
+#   column: value
+one:
+  id: 1
+  jobchecklist_id: 1
+  view: "5"
+  notes: "Revision of 2009-1257."
+  time_of_day_shot: ""
+  field_of_view: "5"
+
+two:
+  id: 2
+  jobchecklist_id: 2
+  view: "0"
+  notes: "Revision of 2009-1258."
+  time_of_day_shot: ""
+  field_of_view: "4"

@@ -1,0 +1,12 @@
+<% remote_form_for [@company, @contact], :update => :message do |f| %>
+  <p>Name :</p>
+  <p><%= f.text_field :name, :size => "25" %></p>
+  <p>Phone :</p>
+  <p><%= f.text_field :phone, :size => "25" %></p>
+  <p>Fax :</p>
+  <p><%= f.text_field :fax, :size => "25" %></p>
+  <p>Email :</p>
+  <p><%= f.text_field :email, :size => "25" %></p>
+  <p><%= submit_tag "Create" %> <span id="message"></span></p>
+<% end %>
+<p><%= link_to_remote "Close", :update => :contact_id, :url => {:controller => :contacts}, :method => :get, :complete => "Modalbox.hide()" %></p>

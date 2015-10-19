@@ -1,0 +1,7 @@
+<ul>
+<% unless @client_requests.blank? %>
+  <% @client_requests.each do |client_request| %>
+    <li id="<%= client_request.id %>"><div><%= link_to client_request.cr_job_id, client_request_path(client_request) %></div></li>
+  <% end %>
+<% end %>
+</ul>

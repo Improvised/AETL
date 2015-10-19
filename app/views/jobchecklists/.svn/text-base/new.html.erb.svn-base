@@ -1,0 +1,13 @@
+  <div class="content">
+    <h2 class="title">New Job Checklist AE job ID = <%= @project.ae_job_id %></h2>
+    <div class="inner">
+      <% form_for @jobchecklist, :url => project_jobchecklists_path, :html => {:class => :form} do |f|%>
+        <%= render :partial => "jobchecklist_form", :locals => {:f => f, :is_readonly => false, :views => @view_jobchecklists}%>
+        <div class="actions-bar">
+          <%= submit_tag "Create" %>
+          <div class="clear"/>
+        </div>
+      <% end -%>
+    </div>
+  </div>
+

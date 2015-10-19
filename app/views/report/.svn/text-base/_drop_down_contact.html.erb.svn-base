@@ -1,0 +1,1 @@
+<%= select_tag "contact_id", options_for_select([["Please select", ""]] + @contacts.map{|c| [c.name, c.id]}, params[:contact_id]) %>

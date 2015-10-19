@@ -1,0 +1,82 @@
+10
+
+dir
+82
+http://aepm.unfuddle.com/svn/aepm_aesims/app/views
+http://aepm.unfuddle.com/svn/aepm_aesims
+
+
+
+2010-11-05T01:39:11.316417Z
+82
+brandon
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+6c572cc4-065b-472b-9dd9-5d3928137192
+
+admin
+dir
+
+billing_to_contacts
+dir
+
+client_requests
+dir
+
+companies
+dir
+
+contacts
+dir
+
+employee_productions
+dir
+
+employee_project_managers
+dir
+
+handlings
+dir
+
+home
+dir
+
+job_types
+dir
+
+jobchecklists
+dir
+
+layouts
+dir
+
+login
+dir
+
+projects
+dir
+
+report
+dir
+
+sales
+dir
+
+shared
+dir
+
+travels
+dir
+

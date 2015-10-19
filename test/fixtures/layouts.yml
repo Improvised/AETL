@@ -1,0 +1,80 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/fixtures.html
+
+# one:
+#   column: value
+#
+# two:
+#   column: value
+
+one:
+  id: 1
+  name: "Bechtel layout"
+  tabloid: 1
+  landscape: 0
+
+two:
+  id: 2
+  name: "Generic 11x17 landscape (specify in notes)"
+  tabloid: 1
+  landscape: 1
+
+three:
+  id: 3
+  name: "Generic 11x17 Portrait (specify in notes)"
+  tabloid: 1
+  landscape: 0
+
+four:
+  id: 4
+  name: "Generic 8.5x11 landscape (specify in notes)"
+  tabloid: 0
+  landscape: 1
+
+five:
+  id: 5
+  name: "Generic 8.5x11 Portrait (specify in notes)"
+  tabloid: 0
+  landscape: 0
+
+six:
+  id: 6
+  name: "KDC special (11 x 8.5)"
+  tabloid: 0
+  landscape: 1
+
+seven:
+  id: 7
+  name: "KDC special (8.5 x 11)"
+  tabloid: 1
+  landscape: 0
+
+eight:
+  id: 8
+  name: "Photo Representation"
+  tabloid: 0
+  landscape: 0
+
+nine:
+  id: 9
+  name: "standard layout (17 x 11 landscape)"
+  tabloid: 1
+  landscape: 1
+
+ten:
+  id: 10
+  name: "tCG standard (8.5 x 11 Vertical)"
+  tabloid: 0
+  landscape: 0
+
+eleven:
+  id: 11
+  name: "Vertical layout (11 x 17 Vertical)"
+  tabloid: 1
+  landscape: 0
+
+twelve:
+  id: 12
+  name: 'Wfi standard (11 x 17 Vertical, no view #s, no map arrows, map on view 1 only'
+  tabloid: 1
+  landscape: 0
+

@@ -1,0 +1,58 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# one:
+#   column: value
+#
+# two:
+#   column: value
+one:
+  id: 1
+  ae_job_id: "CR-2009-0001"
+  project_note: "project note 1"
+  trans_desc: "trans_desc 1"
+  project_id: 1
+  date_in: "2009-11-25 00:00:00"
+  due_date: "2009-11-27 00:00:00"
+  project_name: "Shermanga Canyon"
+  project_number: "c840"
+  job_type_id: 1
+  contact_id: 1
+  job_status_id: 1
+  billing_to_contact_id: 1
+  billing_to_company_id: 1
+  purchase_order: "PD123101-3"
+  invoice: "1410"
+  price: "$75.00"
+  company_id: 1
+  travel_id: 1
+  handling_id: 1
+  employee_production_id: 1
+  production_hour: "0.25"
+  date_finished: "2002-01-29 00:00:00"
+  sale_id: 1
+
+two:
+  id: 2
+  ae_job_id: "CR-2009-0002"
+  project_note: "project note 2"
+  trans_desc: "trans_desc 2"
+  project_id: 2
+  date_in: "2009-11-25 00:00:00"
+  due_date: "2009-11-30 00:00:00"
+  project_name: "Los Angeles Sports Arena"
+  project_number: "C995"
+  job_type_id: 2
+  contact_id: 2
+  job_status_id: 2
+  billing_to_contact_id: 2
+  billing_to_company_id: 2
+  purchase_order: "B120045671"
+  invoice: "1411"
+  price: "$450.00"
+  company_id: 2
+  travel_id: 2
+  handling_id: 2
+  employee_production_id: 2
+  production_hour: "0"
+  date_finished: "2002-01-31 00:00:00"
+  sale_id: 2

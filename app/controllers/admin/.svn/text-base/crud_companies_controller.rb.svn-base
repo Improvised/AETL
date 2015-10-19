@@ -1,0 +1,8 @@
+class Admin::CrudCompaniesController < Admin::AdminController
+  active_scaffold :company do |config|
+    config.columns = ['name', 'address_line_1', 'address_line_2', 'city', 'state', 'zip_code', 'company', 'phone', 'fax', 'sale', 'website', 'email']
+    config.columns['sale'].form_ui = :select
+    config.columns['company'].label = "Billing to Company"
+    config.columns['company'].form_ui = :select
+  end
+end

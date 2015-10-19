@@ -1,0 +1,4 @@
+<option value="">Please select</option>
+<% @employee_project_managers.each do |employee_project_manager| %>
+  <option value="<%= employee_project_manager.id %>"><%= employee_project_manager.name %></option>
+<% end %>

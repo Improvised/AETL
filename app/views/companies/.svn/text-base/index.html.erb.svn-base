@@ -1,0 +1,124 @@
+<style type="text/css">
+        div.auto_complete {
+          width: 350px;
+          background: #fff;
+        }
+        div.auto_complete ul {
+          border:1px solid #888;
+          margin:0;
+          padding:0;
+          width:100%;
+          list-style-type:none;
+        }
+        div.auto_complete ul li {
+          margin:0;
+          padding:3px;
+        }
+        div.auto_complete ul li.selected {
+          background-color: #ffb;
+        }
+        div.auto_complete ul strong.highlight {
+          color: #800;
+          margin:0;
+          padding:0;
+        }
+</style>
+<div class="content">
+    <h2 class="title">Company Search</h2>
+    <table class="table">
+      <tr>
+        <td>
+          
+          <table class="table">
+            <tbody>
+              <tr>
+              	
+                <td width="150px">Enter company name: </td>
+			
+                <td>
+					<input type="text" onkeypress="goToEditPage(event)" size="60" name="company" id="company_name" autocomplete="off"/>
+                    <div id="company_name_auto_complete" class="auto_complete" style="display: none;"></div>
+
+                    <script type="text/javascript">
+                    //<![CDATA[
+                        function goToEditPage(e){
+                            var key;
+                            if(window.event)
+                                key = window.event.keyCode;
+                            else
+                                key = e.which;
+
+                            if (key == 13 && $F('company_id') != "" && window.counter == 1 ) {
+                                window.location = "/companies/"+ $F('company_id') +"/edit";
+                            } else if (key == 13 && window.counter == 1) {
+                                window.counter = 0;
+                            } else if (key == 13) {
+                                window.counter = 1;
+                            }
+                        }
+                        
+                        var company_name_auto_completer = new Ajax.Autocompleter('company_name', 
+                            'company_name_auto_complete', '/companies/auto_complete_for_company_name', {
+                            afterUpdateElement : getSelectionId
+                        });
+                        
+                        function getSelectionId(text, li) {
+                            $('company_id').setValue(li.id);
+                           // window.location = "/companies/"+ li.id +"/edit";
+                        }
+                    //]]>			
+					
+                    </script>    	
+
+
+
+                    <%= hidden_field_tag :company_id %>
+                </td>
+              </tr>
+            </tbody>
+		 </table>        
+        </td>
+      </tr>
+
+    </table>
+
+
+<h2 class="title">Company List</h2>
+  <div class="inner">
+    <div class="actions-bar">
+      <div class="actions">
+        <%= link_to "Add New Company", new_company_path %>
+      </div>
+      <%= will_paginate @companies %>
+      <div class="clear"></div>
+    </div>
+
+    <table class="table">
+      <tr>
+        <th>Name</th>
+        <th class="last">&nbsp;</th>
+      </tr>
+  <% if @companies.blank? %>
+      <tr>
+        <td colspan="3">No company data available</td>
+      </tr>
+  <% else %>
+    <% @companies.each do |company| %>
+      <tr class="<%= cycle('odd', 'even') %>">
+        <td><%= company.name %></td>
+        <td class="last">
+          <%= link_to image_tag("edit.png", :border=>0, :size=> "20x20"), edit_company_path(company) %> <b>|</b>  
+          <%= link_to image_tag("delete.png", :border=>0, :size=> "20x20"), company_path(company), {:confirm => "Are you sure?", :method => :delete} %>
+        </td>
+      </tr>
+    <% end %>
+  <% end %>
+</div>
+</table>
+    <div class="actions-bar">
+      <div class="actions">
+        <%= link_to "Add New Company", new_company_path %>
+      </div>
+      <%= will_paginate @companies %>
+      <div class="clear"></div>
+    </div>

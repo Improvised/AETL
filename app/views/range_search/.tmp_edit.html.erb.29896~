@@ -1,0 +1,75 @@
+            <% field_set_tag '' do %>
+					
+          <table border="0">
+           
+              <tr align=center>
+                <td align=center> 
+                   <font size=3><B> 
+				   <%= link_to "<<-50", edit_project_path(@nav_dn50) %>| |
+				   <%= link_to "<<-10", edit_project_path(@nav_dn10) %>| |
+					<%= link_to "<--1", edit_project_path(@nav_dn1) %>
+					
+					<input type="text" onkeypress="goToEditPage(event)" value="<%= @project.ae_job_id %>" size="8" name="project[ae_job_id]" id="project_ae_job_id" autocomplete="off"/>
+                     
+					 <%= link_to "1-->", edit_project_path(@nav_up1) %>
+					 | | <%= link_to "10->>", edit_project_path(@nav_up10) %>
+					 | | <%= link_to "50->>", edit_project_path(@nav_up50) %>
+					 </B></font>
+					
+		
+				    <div id="project_ae_job_id_auto_complete" class="auto_complete" style="display: none;"></div>
+
+                    <script type="text/javascript">
+                    //<![CDATA[
+                        function goToEditPage(e){
+                            var key;
+                            if(window.event)
+                                key = window.event.keyCode;
+                            else
+                                key = e.which;
+
+                            if (key == 13 && $F('project_id') != "" && window.counter == 1 ) {
+                                window.location = "/projects/"+ $F('project_id') +"/edit";
+                            } else if (key == 13 && window.counter == 1) {
+                                window.counter = 0;
+                            } else if (key == 13) {
+                                window.counter = 1;
+                            }
+                        }
+                        
+                        var project_ae_job_id_auto_completer = new Ajax.Autocompleter('project_ae_job_id', 
+                            'project_ae_job_id_auto_complete', '/projects/auto_complete_for_project_ae_job_id', {
+                            afterUpdateElement : getSelectionId
+                        });
+                        
+                        function getSelectionId(text, li) {
+                            $('project_id').setValue(li.id);
+                           // window.location = "/projects/"+ li.id +"/edit";
+                        }
+                    //]]>
+                    </script>
+                    <%= hidden_field_tag :project_id %>
+                </td>
+              </tr>
+      
+          </table>
+          <% end %>
+  
+  <div class="content">
+  	        <div class="actions-bar">
+          <%= submit_tag "Update" %>
+          <div class="clear"/>
+    <h2 class="title">Edit Project</h2>
+    <div class="inner">
+      <p>
+        <%= render :partial => "shared/project_links", :locals => {:project => @project} %>
+      </p>
+      <% form_for @project, :html => {:class => :form} do |f|%>
+        <%= render :partial => "project_form", :locals => {:f => f, :is_readonly => false}%>
+        <div class="actions-bar">
+          <%= submit_tag "Update" %>
+          <div class="clear"/>
+        </div>
+      <% end -%>
+    </div>
+  </div>

@@ -1,0 +1,8 @@
+<% if @html_id.eql?("contact") %>
+	$("#"+"<%= @html_id %>").html("<%=j collection_select(:project, :contact_id, @contacts, :id, :name, {include_blank: 'Please select'}, {id: 'contact_id'}) %>")
+	$("#add_to_"+"<%= @html_id %>").html("<%=j link_to 'Add new', new_company_contact_url(company_id: @company_id, html_id: @html_id), remote: true, id: 'add_company_contact' %>")
+<% elsif @html_id.eql?("billing_to_contact") %>
+	$("#"+"<%= @html_id %>").html("<%=j collection_select(:project, :billing_to_contact_id, @contacts, :id, :name, {include_blank: 'Please select'}, {id: 'billing_to_contact_id'}) %>")
+	$("#add_to_"+"<%= @html_id %>").html("<%=j link_to 'Add new', new_company_contact_url(company_id: @company_id, html_id: @html_id), remote: true, id: 'add_company_contact' %>")
+<% end %>
+

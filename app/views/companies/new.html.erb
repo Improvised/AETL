@@ -1,0 +1,21 @@
+<h2 class="title">Add new company</h2>
+<div class="inner">
+  <%= form_tag({:action => :create}, {:class => :form}) do %>
+    <%= render :partial => 'company_form' %>
+    <%= submit_tag :Add %>
+  <% end %>
+</div>
+
+
+  <div class="modal fade in" id="salesModal" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body" id="salesBody">
+          
+        </div>
+      </div>
+    </div>
+  </div>

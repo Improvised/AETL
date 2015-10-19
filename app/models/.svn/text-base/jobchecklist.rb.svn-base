@@ -1,0 +1,15 @@
+class Jobchecklist < ActiveRecord::Base
+  belongs_to :project
+  belongs_to :carrier
+  belongs_to :layout
+  has_many :views, :class_name => "ViewJobchecklist", :dependent => :delete_all
+
+
+  def after_save
+    rec_project = self.project
+    unless rec_project.blank?
+       rec_project.update_attribute(:employee_project_manager_id, self.employee_project_manager_id) if rec_project.employee_project_manager_id != self.employee_project_manager_id
+    end
+  end
+end
+

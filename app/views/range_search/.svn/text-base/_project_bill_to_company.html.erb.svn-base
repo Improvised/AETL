@@ -1,0 +1,7 @@
+<% unless @billing_to_companies.blank? %>
+<ul>
+  <% @billing_to_companies.each do |company| %>
+    <li id="<%=company.id%>"><div><%= company.name %></div></li>
+  <% end %>
+</ul>
+<% end %>

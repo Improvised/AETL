@@ -1,0 +1,20 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# one:
+#   column: value
+#
+# two:
+#   column: value
+brandon:
+  id: 1
+  name: "Brandon Hurley"
+jack:
+  id: 2
+  name: "Jack Fitzgerald"
+leah:
+  id: 3
+  name: "Leah Martinez"
+not_assigned:
+  id: 4
+  name: "Not Assigned"
+

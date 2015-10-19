@@ -1,0 +1,43 @@
+<h2 class="title" align="center">Jobs To Be Invoiced</h2>
+<div class="inner">
+  <table class="table">
+    <tr>
+      <td>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>AE Job ID</th>
+              <th>Job Name</th>
+              <th>Job Number</th>
+              <th>Billing Company</th>
+			  <th>Billing Contact</th>
+              <th>Date In</th>
+              <th>Due Date</th>
+			  <th>Job Type</th>
+              <th class="last"><img src="edits.png" /> </th>
+            </tr>
+          </thead>
+          <tbody>
+      <% unless @jobs_to_be_invoiced.empty? %>
+        <% @jobs_to_be_invoiced.each do |job| %>
+           <tr class="<%= cycle('odd', 'even') %>">
+              <td width="90"><%= job.ae_job_id %></td>
+              <td><%= job.name %></td>
+              <td><%= job.number %></td>
+              <td><%= job.billing_to_company.name unless job.billing_to_company.blank?%></td>
+			  <td><%= job.billing_to_contact.name unless job.billing_to_contact.blank?%></td>
+              <td width="90"><%= job.date_in %></td>
+              <td width="90"><%= job.due_date %></td>
+			  <td><%= job.job_type.name unless job.job_type.blank? %></td>
+                 <td class="last" width="320px">
+                <%= render :partial => "/shared/project_links", :locals => {:project => job}%>
+              </td>
+            </tr>
+        <% end %>
+      <% end %>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>

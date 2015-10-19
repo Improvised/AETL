@@ -1,0 +1,84 @@
+<div class="content">
+    <h2 class="title">Date Range Search</h2>
+    
+    
+    
+    <div class="inner">
+      <div class="actions-bar">
+      	
+      	<%= form_tag({:action => 'search'}, {:method => :get}) do %>
+            <%= field_set_tag 'Set Range (based on due date)' do %>
+      	<br>Start Date:
+      	        
+        	<%= date_select("report", "start_date", :start_year => 2000, :end_year => Time.now.year, :default => @report_start_date) %>
+        	<br>
+        	<br>
+        	End Date:
+        	<%= date_select("report", "end_date", :start_year => 2000, :end_year => Time.now.year, :default => @report_end_date) %>
+        	<br>
+            <br>
+            <td><%= submit_tag 'Find' %></td>
+            <br>
+          	<% end %>
+          <% end %><br>
+  
+                        
+        <div class="actions">          
+
+        	
+        	 
+        </div>
+
+            
+        <%= will_paginate @projects %>
+        <div class="clear" />
+      </div>
+                      <%= form_tag({:action => 'search_export'}, {:method => :get}) do %>    
+          <%= date_select("report", "start_date", :start_year => 2000, :end_year => Time.now.year, :default => @report_start_date, :discard_day => true, :discard_month => true, :discard_year => true) %>
+          <%= date_select("report", "end_date", :start_year => 2000, :end_year => Time.now.year, :default => @report_end_date, :discard_day => true, :discard_month => true, :discard_year => true) %>            
+          <%= submit_tag 'Export current range to CSV (Excel) file' %> — (Note: Large ranges can take a min or two to generate)
+	      <% end %>
+      <br />
+      <table class="table">
+        <tbody>
+          <tr>            
+            <th>AE job ID</th>
+			<th>Project Name</th>
+			<th>Project Number</th>
+			<th>Due Date</th>
+			<th>Carrier</th>          
+            <th>Company Name</th>
+			<th>Contact</th>
+			<th>Status</th>
+            <th class="last"><img src="/assets/edits.png" /> </th>
+          </tr>
+          <% if @projects.blank? %>
+          <tr>
+            <td colspan="5">No project data available</td>
+          </tr>
+          <% else %>
+            <% @projects.each do |project| %>
+          <tr class="<%= cycle('odd', 'even') %>">
+            <td align="center" width="100"><%=h project.ae_job_id %></td>
+			<td><%=h project.name %></td>
+			<td width="140"><%=h project.number %></td>
+			<td width="140"><%=h project.due_date %></td>
+			<td><%=h project.jobchecklist.carrier.name if (!project.jobchecklist.blank? && !project.jobchecklist.carrier.blank?) %></td>            
+            <td><%=h project.company.name unless project.company.blank? %></td>
+			<td width="150"><%=h project.contact.name unless project.contact.nil? %></td>
+			<td width="130"><%=h project.job_status.name unless project.job_status.nil? %></td>
+            <td class="last" width="320px">
+              <%= render :partial => "/shared/project_links", :locals => {:project => project}%>
+            </td>
+          </tr>
+            <% end -%>
+          <% end -%>
+        </tbody>
+      </table>
+      <div class="actions-bar">
+        
+        <%= will_paginate @projects %>
+        <div class="clear" />
+      </div>
+    </div>
+  </div>

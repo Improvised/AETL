@@ -1,0 +1,4 @@
+class ViewJobchecklist < ActiveRecord::Base
+  belongs_to :jobchecklist
+end
+

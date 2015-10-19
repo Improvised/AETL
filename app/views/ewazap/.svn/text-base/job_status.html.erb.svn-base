@@ -1,0 +1,141 @@
+<h2 class="title" align="center">Job Status Reports</h2>
+<div class="inner">
+  <table class="table">
+    <tr bgcolor="#e57d00">
+      <td>
+        <div>
+          <span style="float:left"><b><u>In Production:</u> <%= @jobs_in_production.size%> </b></span>
+          <span style="float:right"><%= link_to "Add new project", new_project_path %></span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>AE Job ID</th>
+              <th>Job Name</th>
+              <th>Project Number</th>			  
+              <th>Date In</th>
+              <th>Due Date</th>
+			  <th>Contact</th>
+			  <th>Job Type</th>
+          <th class="last"><img src="../images/edits.png" /> </th>
+            </tr>
+          </thead>
+          <tbody>
+      <% unless @jobs_in_production.empty? %>
+        <% @jobs_in_production.each do |job| %>
+            <tr class="<%= cycle('odd', 'even') %>">
+              <td width="120"><%= job.ae_job_id unless job.ae_job_id.blank? %></td>
+              <td width="240"><%= job.name unless job.name.blank? %></td>
+              <td width="170"><%= job.number unless job.number.blank? %></td>			  
+              <td width="120"><%= job.date_in.strftime("%m-%d-%Y") unless job.date_in.blank? %></td>
+              <td width="120"><%= job.due_date.strftime("%m-%d-%Y") unless job.due_date.blank? %></td>
+			  <td width="200"><%= job.contact.name unless job.contact.nil? %></td>			  
+			  <td><%= job.job_type.name unless job.job_type.blank? %></td>
+             <td class="last" width="320px">
+                <%= render :partial => "/shared/project_links", :locals => {:project => job}%>
+              </td>
+            </tr>
+        <% end %>
+      <% end %>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+		    <tr>
+      <td>
+		<br><br>
+      </td>
+    </tr>
+	
+	    <tr bgcolor="#e57d00">
+      <td>
+        <div>
+           <span style="float:left"><b><u>In Pre Production:</u> <%= @jobs_in_pre_production.size%> </b></span>
+          <span style="float:right"><%= link_to "Add new project", new_project_path %></span>
+		  
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>AE Job ID</th>
+              <th>Job Name</th>
+              <th>Project Number</th>			  
+              <th>Date In</th>
+              <th>Due Date</th>
+			  <th>Contact</th>
+			  <th>Site Location</th>
+          <th class="last"><img src="../images/edits.png" /> </th>
+            </tr>
+          </thead>
+          <tbody>
+      <% unless @jobs_in_pre_production.empty? %>
+        <% @jobs_in_pre_production.each do |job| %>
+            <tr class="<%= cycle('odd', 'even') %>">
+              <td width="120"><%= job.ae_job_id unless job.ae_job_id.blank? %></td>
+              <td width="240"><%= job.name unless job.name.blank? %></td>
+              <td width="170"><%= job.number unless job.number.blank? %></td>			  
+              <td width="120"><%= job.date_in.strftime("%m-%d-%Y") unless job.date_in.blank? %></td>
+              <td width="120"><%= job.due_date.strftime("%m-%d-%Y") unless job.due_date.blank? %></td>
+			  <td width="200"><%= job.contact.name unless job.contact.nil? %></td>			  
+			  <td><%= job.city unless job.city.blank? %></td>
+             <td class="last" width="320px">
+                <%= render :partial => "/shared/project_links", :locals => {:project => job}%>
+              </td>
+            </tr>
+        <% end %>
+      <% end %>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+	
+	
+	
+    <tr>
+      <td>
+        <table width="400px" border="0">
+          <tbody>
+
+            <tr>
+              
+              
+              <td width="300px">Total jobs ready to be invoiced: </td>
+              <td width="50px">( <%= @jobs_to_be_invoiced.size%> )</td>
+			  <td width="50px"><%= button_to_function "*", "window.open('" + jobs_to_be_invoiced_report_path + "','','toolbar=no,menubar=no,resizable=no,scrollbars=yes,height=800,width=1200')" %></td>
+                            </tr>
+			<tr class="even">
+              <td>Completed W/O PO: </td>
+              <td>( <%= @jobs_completed_wo_po.size%> )</td>
+			  <td><%= button_to_function "*", "window.open('" + jobs_completed_wo_po_report_path + "','','toolbar=no,menubar=no,resizable=no,scrollbars=yes,height=800,width=1200')" %></td>
+            </tr>            
+            <tr>
+			  <td>Jobs Waiting for PO / Contract: </td>
+              <td>( <%= @jobs_for_po_contract.size%> )</td>
+			  <td><%= button_to_function "*", "window.open('" + jobs_for_po_contract_report_path + "','','toolbar=no,menubar=no,resizable=no,scrollbars=yes,height=800,width=1200')" %></td>
+            </tr>
+			<tr class="even">
+              <td>Total Jobs on Hold: </td>
+              <td>( <%= @jobs_on_hold.size%> )</td>
+			  <td><%= button_to_function "*", "window.open('" + jobs_on_hold_report_path + "','','toolbar=no,menubar=no,resizable=no,scrollbars=yes,height=800,width=1200')" %></td>
+            </tr>
+
+            <tr bgcolor="#e57d00">
+			  <td><b></>Total Active Jobs:</b></td>
+              <td><b><%= @jobs_active.size%></td>
+			  <td>&nbsp;</td>
+			  
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>

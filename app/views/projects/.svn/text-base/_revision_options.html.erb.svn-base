@@ -1,0 +1,10 @@
+<p>
+  Clicking the button below will open new window to create a new job based on the criteria below.<br />
+  Some fields will be left blank and will need to be filled in.<br />
+  The billing status be "Revision". If the billing status is different, you will need to change it.<br />
+</p>
+<%= hidden_field_tag "revision[ae_job_id]", @project.ae_job_id %>
+<%= hidden_field_tag "revision[job_history]", @project.job_history %>
+<%= check_box :revision, :keep_infomation, :checked => true %> keep the same site information(job name, job number, etc)<br />
+<%= check_box :revision, :keep_site_address, :checked => true %> keep the same site address<br />
+<%= check_box :revision, :keep_view_description, :checked => true %> keep the same view description

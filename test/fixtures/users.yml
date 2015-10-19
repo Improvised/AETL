@@ -1,0 +1,18 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# one:
+#   column: value
+#
+# two:
+#   column: value
+
+one:
+  id: 1
+  username: Admin
+  password: <%= require "digest"; Digest::MD5.hexdigest("Aepm_admin").to_s %>
+
+two:
+  id: 2
+  username: Administrator
+  password: <%= require "digest"; Digest::MD5.hexdigest("Aepm_administrator").to_s %>
+  status: ADMIN

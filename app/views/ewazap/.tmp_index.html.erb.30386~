@@ -1,0 +1,10 @@
+<h2 class="title">Reports</h2>
+<div class="inner">
+  <div class="actions-bar">
+    <div class="actions">
+      <%= button_to "Job Status Report", :action => "job_status" %>      
+      <input type="submit" value="Invoice List" onclick="window.open('/report/invoice_list', 'invoice_list', 'width=1000,height=600,scrollbars=yes');return false;" />
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>

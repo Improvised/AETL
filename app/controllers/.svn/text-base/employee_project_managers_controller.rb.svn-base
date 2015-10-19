@@ -1,0 +1,21 @@
+class EmployeeProjectManagersController < ApplicationController
+  def index
+    @employee_project_managers = EmployeeProjectManager.all
+    render :layout => false
+  end
+
+  def new
+    @employee_project_manager = EmployeeProjectManager.new
+    render :layout => false
+  end
+
+  def create
+    @employee_project_manager = EmployeeProjectManager.new(params[:employee_project_manager])
+
+    if @employee_project_manager.save
+      render :text => 'Project Manager was added', :layout => false and return
+    end
+
+    render :layout => false
+  end
+end

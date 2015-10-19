@@ -1,0 +1,35 @@
+/*
+
+*= require jquery-ui-1.10.4.custom.min
+*= require jquery.datetimepicker
+*= require active_scaffold
+*= require_self
+*= require_tree .
+*/
+
+/* rest of file omitted */
+
+
+.label{color: black;}
+.pagination {
+  display: inline-flex !important;
+}
+.current {
+  padding: 2px 5px !important;
+  margin-right: 5px !important;
+  background: #4b4c4c;
+	color: #FFF;
+	border-color: #4b4c4c;
+}
+
+
+body {
+  font-family: Intrepid, arial !important;
+}
+
+@font-face
+{
+font-family: Intrepid;
+src: url("/assets/intrepid.ttf");
+}
+

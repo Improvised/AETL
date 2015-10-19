@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>A E P M</title>
+    <%= javascript_include_tag "prototype" %>
+  </head>
+  <body>
+    <%= "<script>" + remote_function(:confirm => 'Do you want to change the delivery status to "Sent Soft Copies & Hard Copies"?', :url => {:controller => :projects, :action => :update_delivery_status, :id => @client_request.project.id}) + "</script>" if !@client_request.project.blank? and @client_request.project.delivery_id == 4 %>
+    <table align="center" width="790px">
+      <tr>
+        <td colspan="2"><div align="center"><%= image_tag "transmittal_header.jpg", :size => "790x200" %></div></td>
+      </tr>
+      <tr>
+        <td colspan="2"><div align="center"><h2>TRANSMITTAL</h2></div></td>
+      </tr>
+      <tr>
+        <td width="30%">Date : </td>
+        <td><%= Date.today.strftime("%m-%d-%Y") %></td>
+      </tr>
+      <tr>
+        <td valign="top">To : </td>
+        <td>
+          <% unless @client_request.company.nil? %>
+            <%= @client_request.company.name + "<br />" if @client_request.company.name %>
+            <%= @client_request.company.address_line_1 + "<br />" if @client_request.company.address_line_1 %>
+            <%= @client_request.company.address_line_2 if @client_request.company.address_line_2 %>
+            <%= @client_request.company.city %>, <%= @client_request.company.state %> <%= @client_request.company.zip_code %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">Attn : </td>
+        <td><%= @client_request.contact.name unless @client_request.contact.nil? %></td>
+      </tr>
+      <tr>
+        <td valign="top">Project Name : </td>
+        <td><%= @client_request.project_name %></td>
+      </tr>
+      <tr>
+        <td valign="top">Project Number : </td>
+        <td><%= @client_request.project_number %></td>
+      </tr>
+      <tr>
+        <td valign="top">AE Job ID : </td>
+        <td><%= @client_request.cr_job_id %></td>
+      </tr>
+      <tr>
+        <td valign="top">Description : </td>
+        <td>
+          Please find enclosed photo simulations for <%= @client_request.invoice %>. If you have any questions or
+          comments, please do not hesitate to contact me.
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">Notes : </td>
+        <td><%= @client_request.project_note %></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <br /><br /><br />
+          Thank You,<br /><br /><%= Sale.find(@client_request.account_manager_id).name unless @client_request.account_manager_id.blank? %><br /><br /><br />
+          THE DATA AND INFORMATION PRESENTED HEREIN HAVE BEEN PRODUCED WITH INDUSTRY STANDARD, BY
+          OPERATORS EXERCISING REASONABLE SKILL AND CARE.  THIS DATA AND INFORMATION IS PROVIDED FOR
+          INFORMATIONAL PURPOSES ONLY.  NO GUARANTEE OR WARRANTY EXPRESSED OR IMPLIED IS MADE WITH
+          RESPECT TO THE ACCURACY OF THIS DATA OR INFORMATION.  IN NO EVENT WILL ARTISTIC ENGINEERING BE
+          HELD LIABLE FOR ANY LOSS OF PROFIT OR ANY OTHER COMMERCIAL DAMAGE INCLUDING BUT NOT LIMITED
+          TO SPECIAL, INCIDENTAL, CONSEQUENTIAL OR OTHER DAMAGES RESULTING FROM THE USE OF THE
+          INFORMATION OR DATA.
+          <div><%= button_to_function "Print", "$(this).up().hide();window.print()"%></div>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

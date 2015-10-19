@@ -1,0 +1,7 @@
+<h2 class="title">Edit company</h2>
+<div class="inner">
+  <% form_tag({:action => :update, :id => @company.id}, {:class => :form, :method => :put}) do %>
+    <%= render :partial => 'company_form' %>
+    <%= submit_tag :Update %>
+  <% end %>
+</div>

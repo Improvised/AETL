@@ -1,0 +1,81 @@
+<h2 class="title" align="center">Job Status Reports</h2>
+<div class="inner">
+  <table class="table">
+    <tr>
+      <td>
+        <div>
+          <span style="float:left">In Production</span>
+          <span style="float:right"><%= link_to "Add new project", new_project_path %></span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>AE Job ID</th>
+              <th>Job Name</th>
+              <th>Project Number</th>			  
+              <th>Date In</th>
+              <th>Due Date</th>
+			  <th>Contact</th>
+			  <th>Job Type</th>
+          <th class="last"><img src="../images/edits.png" /> </th>
+            </tr>
+          </thead>
+          <tbody>
+      <% unless @jobs_in_production.empty? %>
+        <% @jobs_in_production.each do |job| %>
+            <tr class="<%= cycle('odd', 'even') %>">
+              <td><%= job.ae_job_id unless job.ae_job_id.blank? %></td>
+              <td><%= job.name unless job.name.blank? %></td>
+              <td><%= job.number unless job.number.blank? %></td>			  
+              <td><%= job.date_in.strftime("%m-%d-%Y") unless job.date_in.blank? %></td>
+              <td><%= job.due_date.strftime("%m-%d-%Y") unless job.due_date.blank? %></td>
+			  <td><%= job.contact.name unless job.contact.name.blank?%></td>
+			  <td><%= job.job_type.name unless job.job_type.blank? %></td>
+             <td class="last" width="310px">
+                <%= render :partial => "/shared/project_links", :locals => {:project => job}%>
+              </td>
+            </tr>
+        <% end %>
+      <% end %>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <table class="table">
+          <tbody>
+            <tr>
+              <td width="25%">&nbsp;</td>
+              <td width="25%">&nbsp;</td>
+              <td width="25%">Number of jobs currently in production : </td>
+              <td><%= text_field_tag "total_jobs_in_production", @jobs_in_production.size, :readonly => "readonly" %></td>
+            </tr>
+            <tr>
+              <td>Total jobs in Pre-Production : </td>
+              <td><%= text_field_tag "total_jobs_in_pre_production", @jobs_in_pre_production.size, :readonly => "readonly" %><%= button_to_function "*", "window.open('" + jobs_in_pre_production_report_path + "','','toolbar=no,menubar=no,resizable=no,scrollbars=yes,height=800,width=1200')" %></td>
+              <td>Total jobs ready to be invoiced : </td>
+              <td><%= text_field_tag "total_jobs_ready_to_be_invoiced", @jobs_to_be_invoiced.size, :readonly => "readonly" %><%= button_to_function "*", "window.open('" + jobs_to_be_invoiced_report_path + "','','toolbar=no,menubar=no,resizable=no,scrollbars=yes,height=800,width=1200')" %></td>
+            </tr>
+            <tr>
+              <td>Total Jobs on Hold : </td>
+              <td><%= text_field_tag "total_jobs_on_hold", @jobs_on_hold.size, :readonly => "readonly" %><%= button_to_function "*", "window.open('" + jobs_on_hold_report_path + "','','toolbar=no,menubar=no,resizable=no,scrollbars=yes,height=800,width=1200')" %></td>
+              <td>Jobs Waiting for PO / Contract : </td>
+              <td><%= text_field_tag "total_jobs_for_po_contract", @jobs_for_po_contract.size, :readonly => "readonly" %><%= button_to_function "*", "window.open('" + jobs_for_po_contract_report_path + "','','toolbar=no,menubar=no,resizable=no,scrollbars=yes,height=800,width=1200')" %></td>
+            </tr>
+            <tr>
+              <td>Completed W/O PO : </td>
+              <td><%= text_field_tag "total_jobs_completed_wo_po", @jobs_completed_wo_po.size, :readonly => "readonly" %><%= button_to_function "*", "window.open('" + jobs_completed_wo_po_report_path + "','','toolbar=no,menubar=no,resizable=no,scrollbars=yes,height=800,width=1200')" %></td>
+              <td>Total Active Jobs : </td>
+              <td><%= text_field_tag "total_active_jobs", @jobs_active.size, :readonly => "readonly" %></td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>

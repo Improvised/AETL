@@ -1,0 +1,253 @@
+<style type="text/css">
+        div.auto_complete {
+          width: 350px;
+          background: #fff;
+        }
+        div.auto_complete ul {
+          border:1px solid #888;
+          margin:0;
+          padding:0;
+          width:100%;
+          list-style-type:none;
+        }
+        div.auto_complete ul li {
+          margin:0;
+          padding:3px;
+        }
+        div.auto_complete ul li.selected {
+          background-color: #ffb;
+        }
+        div.auto_complete ul strong.highlight {
+          color: #800;
+          margin:0;
+          padding:0;
+        }
+</style>
+      <table class="table">
+        <tr valign="top">
+          <td>
+            <table class="table">
+              <tbody>
+              <tr>
+                <td width="100px">AE Job id: </td>
+                <td><%= now_ae_job_id = @project.ae_job_id || @project.create_ae_job_id %><%= f.hidden_field :ae_job_id, :value =>now_ae_job_id %></td>
+              </tr>
+              <tr>
+                <td width="100px">Company:</td>
+                <td>
+                    <input type="text" value="<%= @project.company.nil? ? "" : @project.company.name  %>" size="30" name="company" id="project_company" autocomplete="off"/>
+                    <div id="project_company_auto_complete" class="auto_complete" style="display: none;"></div>
+
+                    <script type="text/javascript">
+                    //<![CDATA[
+                        var project_company_auto_completer = new Ajax.Autocompleter('project_company',
+                            'project_company_auto_complete', '/projects/auto_complete_for_project_company', {
+                                afterUpdateElement : getSelectionCompany
+                            }
+                        );
+                        function getSelectionCompany(text, li) {
+                            $('project_company_id').setValue(li.id);
+                            <%= "#{remote_function(:update => "contact", :url => {:action => 'contact_by_company'}, :with => "'id='+$F('project_company_id')+'&method_type=contact_id'") + ';if($F("project_company_id")==""){$("new_contact_link").hide()}else{$("new_contact_link").href="/companies/"+$F("project_company_id")+"/contacts/new";$("new_contact_link").show()}'}" %>
+                            return false;
+                        }
+                    //]]>
+                    </script>
+
+                    <%= f.hidden_field :company_id %>
+                    <%= link_to "&nbsp;Add", new_company_path %>
+                </td>
+              </tr>
+              <tr>
+                <td width="100px">Contact:</td>
+                <td>
+                  <span id="contact"><%= render :partial => "drop_down_contact", :locals => {:method => 'contact_id', :contacts => @contacts, :is_readonly => is_readonly} %></span>
+                  <%= link_to "Add new", new_company_contact_path(@project.company), :title => "Add Account Manager", :onclick => "Modalbox.show(this.href, {title: this.title, width: 600}); return false;", :id => :new_contact_link, :style => !@project.company.blank? ? '' : 'display:none' %>
+                </td>
+              </tr>
+              <tr>
+                <td width="100px">Account Manager:</td>
+                <td>
+                  <%= f.collection_select :account_manager_id, @sales, :id, :name, {:include_blank => "Please select"}, {:disabled => is_readonly, :id => :account_manager_id} %>
+                  <%= link_to "Add new", {:controller => :sales, :action => :new}, :title => "Add Account Manager", :onclick => "Modalbox.show(this.href, {title: this.title, width: 600}); return false;" %>
+                </td>
+              </tr>
+              <tr>
+                <td width="100px">Date in:</td>
+                <td><%= calendar_date_select_tag "#{f.object_name}[date_in]", @project.date_in.blank? ? "" : @project.date_in.strftime("%m-%d-%Y"), {:readonly => is_readonly} %></td>
+              </tr>
+              <tr>
+                <td width="100px">Due date:</td>
+                <td><%= calendar_date_select_tag "#{f.object_name}[due_date]", @project.due_date.blank? ? "" : @project.due_date.strftime("%m-%d-%Y") , {:readonly => is_readonly} %></td>
+              </tr>
+              <tr>
+                <td width="100px">Job Status:</td>
+                <td><%= f.collection_select :job_status_id, @job_statuses, :id, :name, {}, {:disabled => is_readonly} %></td>
+              </tr>
+              <tr>
+                <td width="100px">Delivery Status:</td>
+                <td><%= f.collection_select :delivery_id, @deliveries, :id, :name, {}, {:disabled => is_readonly} %></td>
+              </tr>
+              </tbody>
+            </table>
+          </td>
+          <td align="top">
+            <table class="table">
+              <tbody>
+              <tr>
+                <td width="100px">Engineer:</td>
+                <td>
+                  <%= f.select(:employee_production_id, @employee_productions.collect{|p| [p.name, p.id]}, {:include_blank => "Please select"}, {:disabled => is_readonly, :id => :employee_production_id}) %>
+                  <%= link_to "Add new", {:controller => :employee_productions, :action => :new}, :title => "Add New Engineer", :onclick => "Modalbox.show(this.href, {title: this.title, width: 600}); return false;" %>
+                </td>
+              </tr>
+              <tr>
+                <td width="100px">Production Hours:</td>
+                <td><%= f.text_field :production_hour, :size => "25", :style => "text-align: right", :readonly => is_readonly %></td>
+              </tr>
+              <tr>
+                <td width="100px">Mileage:</td>
+                <td><%= f.text_field :mileage, :size => "25", :style => "text-align: right", :readonly => is_readonly %></td>
+              </tr>
+              <tr>
+                <td width="100px">Project Manager:</td>
+                <td>
+                  <%= f.select(:employee_project_manager_id, @employee_project_managers.collect{|p| [p.name, p.id]}, {:include_blank => "Please select"}, {:disabled => is_readonly}) %>
+                  <%= link_to "Add new", {:controller => :employee_project_managers, :action => :new}, :title => "Add New Project Manager", :onclick => "Modalbox.show(this.href, {title: this.title, width: 600}); return false;" %>
+                </td>
+              </tr>
+              <tr>
+                <td width="100px">Project Manager Hours:</td>
+                <td><%= f.text_field :project_manager_hour, :size => "25", :style => "text-align: right", :readonly => is_readonly %></td>
+              </tr>
+              <tr>
+                <td width="100px">Job Type:</td>
+                <td>
+                  <%= f.collection_select :job_type_id, @job_types, :id, :name, {:include_blank => "Please select"}, {:disabled => is_readonly, :id => :job_type_id} %>
+                </td>
+              </tr>
+              <tr>
+                <td width="100px">Handling:</td>
+                <td>
+                  <%= f.collection_select :handling_id, @handlings, :id, :name, {:include_blank => "Please select"}, {:disabled => is_readonly, :id => :handling_id} %>
+                </td>
+              </tr>
+              <tr>
+                <td width="100px">Travel:</td>
+                <td>
+                  <%= f.collection_select :travel_id, @travels, :id, :name, {:include_blank => "Please select"}, {:disabled => is_readonly, :id => :travel_id} %>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <table class="table">
+              <tbody>
+              <tr>
+                <td width="100px">Project Name:</td>
+                <td><%= f.text_field :name, :size => "25", :readonly => is_readonly %></td>
+              </tr>
+              <tr>
+                <td width="100px">Project Number:</td>
+                <td><%= f.text_field :number, :size => "25", :readonly => is_readonly %></td>
+              </tr>
+              <tr>
+                <td width="100px">Address line 1:</td>
+                <td><%= f.text_field :address_line_1, :size => "25", :readonly => is_readonly %></td>
+              </tr>
+              <tr>
+                <td width="100px">Address line 2:</td>
+                <td><%= f.text_field :address_line_2, :size => "25", :readonly => is_readonly %></td>
+              </tr>
+              <tr>
+                <td width="100px">City:</td>
+                <td><%= f.text_field :city, :size => "25", :readonly => is_readonly %></td>
+              </tr>
+              <tr>
+                <td width="100px">State:</td>
+                <td><%= f.text_field :state, :size => "3", :readonly => is_readonly %></td>
+              </tr>
+              <tr>
+                <td width="100px">zip:</td>
+                <td><%= f.text_field :zip, :size => "10", :readonly => is_readonly %></td>
+              </tr>
+              </tbody>
+            </table>
+          </td>
+          <td valign="top">
+            <table class="table">
+              <tbody>
+              <tr>
+                <td width="110px">Bill to Company:</td>
+                <td>
+                    <input type="text" value="<%= @project.billing_to_company.nil? ? "" : @project.billing_to_company.name  %>" size="30" name="billing_to_company" id="project_billing_to_company" autocomplete="off"/>
+                    <div id="project_billing_to_company_auto_complete" class="auto_complete" style="display: none;"></div>
+                    <script type="text/javascript">
+                    //<![CDATA[
+                        var project_billing_to_company_auto_completer = new Ajax.Autocompleter('project_billing_to_company',
+                            'project_billing_to_company_auto_complete', '/projects/auto_complete_for_project_billing_to_company', {
+                                afterUpdateElement : getSelectionBillTo
+                            }
+                        );
+                        function getSelectionBillTo(text, li) {
+                            $('project_billing_to_company_id').setValue(li.id);
+                            <%= "#{remote_function(:update => "billing_to_contact", :url => {:action => 'contact_by_company'}, :with => "'id='+$F('project_billing_to_company_id')+'&method_type=billing_to_contact_id'+'&payable=true'") + ';if($F("project_billing_to_company_id")==""){$("new_billing_to_contact_link").hide()}else{$("new_billing_to_contact_link").href="/companies/"+$F("project_billing_to_company_id")+"/contacts/new";$("new_billing_to_contact_link").show()}'}" %>
+                            return false;
+                        }
+                    //]]>
+                    </script>
+                    <%= f.hidden_field :billing_to_company_id %>
+                    <%= link_to "&nbsp;Add", new_company_path %>
+                </td>
+              </tr>
+              <tr>
+                <td width="110px">Bill to Contact:</td>
+                <td>
+                  <span id="billing_to_contact"><%= render :partial => "drop_down_billing_to_contact", :locals => {:method => 'billing_to_contact_id', :contacts => @billing_to_contacts, :is_readonly => is_readonly} %></span>
+                  <%= link_to "Add new", new_company_billing_to_contact_path(@project.billing_to_company_id), :title => "Add Bill to Contact", :onclick => "Modalbox.show(this.href, {title: this.title, width: 600}); return false;", :id => :new_billing_to_contact_link, :style => !@project.billing_to_company_id.blank? ? '' : 'display:none' %>
+                </td>
+              </tr>
+              <tr>
+                <td width="110px">Billing Notes / PO:</td>
+                <td><%= f.text_field :billing_note, :size => "25", :readonly => is_readonly %></td>
+              </tr>
+              <tr>
+                <td width="110px">Price: </td>
+                <td>$<%= f.text_field :price, :size => "25", :style =>"text-align: right", :readonly => is_readonly %></td>
+              </tr>
+              <tr>
+                <td width="110px">Invoice Number:</td>
+                <td><%= f.text_field :invoice_number, :size => "25", :readonly => is_readonly %></td>
+              </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+
+            Job History: <b>
+            	<% if @job_his_links == nil%>
+					<% dumb = nil%>
+				<% else %>
+            		<% @job_his_links.each do |link|%>				
+					| <%= link_to link.ae_job_id, edit_project_path(link.id) %> |
+					<% end %>
+				<% end %>				
+				</b> <br />
+            
+			 
+                
+          </td>
+        </tr>
+      </table>
+
+<script>
+  Event.observe("project_job_status_id", "change", function() {
+    if ($F(this) == "5" && confirm('"Do you want to change the delivery status to "Sent Soft Copies"?')) {
+      $("project_delivery_id").value = "3";
+    }
+  });
+</script>

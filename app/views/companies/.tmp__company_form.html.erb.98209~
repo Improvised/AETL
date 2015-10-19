@@ -1,0 +1,111 @@
+<div class="columns">
+  <div class="column left">
+    <div class="group">
+      <%= label :company, :name, "Company Name", :class => :label %>
+      <%= text_field :company, :name, :class => "text_field" %>
+      <%= error_message_on :company, :name if error_message_on :company, :name %>
+    </div>
+    <div class="group">
+      <%= label :company, :address_line_1, "Address Line 1", :class => :label %>
+      <%= text_field :company, :address_line_1, :class => "text_field" %>
+    </div>
+    <div class="group">
+      <%= label :company, :address_line_2, "Address Line 2", :class => :label %>
+      <%= text_field :company, :address_line_2, :class => "text_field" %>
+    </div>
+    <div class="group">
+      <%= label :company, :city, "City", :class => :label %>
+      <%= text_field :company, :city, :class => "text_field" %>
+    </div>
+    <div class="group">
+      <%= label :company, :state, "State", :class => :label %>
+      <%= text_field :company, :state, :class => "text_field" %>
+    </div>
+    <div class="group">
+      <%= label :company, :zip_code, "Zip Code", :class => :label %>
+      <%= text_field :company, :zip_code, :class => "text_field" %>
+    </div>
+    <div class="group">
+      <%= label :company, :phone, "Phone Number", :class => :label %>
+      <%= text_field :company, :phone, :class => "text_field" %>
+    </div>
+    <div class="group">
+      <%= label :company, :fax, "Fax Number", :class => :label %>
+      <%= text_field :company, :fax, :class => "text_field" %>
+    </div>
+    <div class="group">
+      <%= label :company, :billing_to_company_id, "Bill to Company", :class => :label %>
+      <%= collection_select :company, :billing_to_company_id, @companies || {}, :id, :name, {:include_blank => "Same"} %>
+    </div>
+    <div class="group">
+      <%= label :company, :sale_id, "Account Manager", :class => :label %>
+      <%= collection_select :company, :sale_id, @sales || {}, :id, :name, :id => "account_manager_id" %>
+      <%= link_to "Add new", {:controller => :sales, :action => :new}, :title => "Add Account Manager", :onclick => "Modalbox.show(this.href, {title: this.title, width: 600}); return false;" %>
+      <%= error_message_on :company, :sale_id if error_message_on :company, :sale_id %>
+    </div>
+    <div class="group">
+      <%= label :company, :website, "Website", :class => :label %>
+      <%= text_field :company, :website, :class => "text_field" %>
+    </div>
+    <div class="group">
+      <%= label :company, :email, "Email", :class => :label %>
+      <%= text_field :company, :email, :class => "text_field" %>
+    </div>
+  </div>
+  <div class="column right">
+    <table id="contact" class="table">
+      <tr>
+        <th>Contact Name</th>
+        <th>Phone</th>
+        <th>Fax</th>
+        <th>Email</th>
+        <th class="last">&nbsp;</th>
+      </tr>
+  <% unless @contacts.empty? %>
+    <% @contacts.each do |contact| %>
+      <tr id="<%= contact.id %>" class="<%= cycle('odd', 'even') %>">
+        <td><%= contact.name %></td>
+        <td><%= contact.phone %></td>
+        <td><%= contact.fax %></td>
+        <td><%= contact.email %></td>
+        <td class="last">
+          <%= link_to :Destroy, {:action => 'delete_contact', :id => contact.id}, :confirm => "Are you sure?", :method => :delete %>
+        </td>
+      </tr>
+    <% end %>
+  <% end %>
+
+      <tr id="input">
+        <td><%= text_field_tag "contact[name][]", "", :size => 10 %></td>
+        <td><%= text_field_tag "contact[phone][]", "", :size => 10 %></td>
+        <td><%= text_field_tag "contact[fax][]", "", :size => 10 %></td>
+        <td><%= text_field_tag "contact[email][]", "", :size => 10 %></td>
+        
+      </tr>              
+    </table>
+	<table class="table">
+		<tr>
+        <td><b></>A/R Notes:</b><br><u></>Please log: &lt;date contacted&gt;; &lt;your name&gt;; &lt;person contacted&gt;; &lt;number/e-mail used&gt;; &lt;(details of conversation)&gt;</u>
+		<br>
+		Please keep a vertical space between every new contact atempt	
+		<br>
+		Please precede all other notes with a "%%"
+		<br>
+		
+    
+    
+      <%= text_area :company, :ar_notes, :class => "text_area" %>
+    
+        
+	</table>
+
+      </tr>
+	
+    <div>
+      
+	      <%= submit_tag :Update %>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>
+

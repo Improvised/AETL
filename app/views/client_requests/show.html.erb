@@ -1,0 +1,11 @@
+<div class="content">
+  <h2 class="title">Client Request</h2>
+  <div class="inner">
+    <%= form_for @client_request, :html => {:class => :form} do |f| %>
+      <%= render :partial => "client_request_form", :locals => {:f => f, :is_readonly => true}%>
+      <div class="actions-bar">
+        <div class="clear" />
+      </div>
+    <% end -%>
+  </div>
+</div

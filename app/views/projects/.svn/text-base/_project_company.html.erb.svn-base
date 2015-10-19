@@ -1,0 +1,7 @@
+<ul>
+<% unless @companieses.blank? %>
+  <% @companieses.each do |company| %>
+    <li id="<%= company.id %>"><div><%= company.name %></div></li>
+  <% end %>
+<% end %>
+</ul>

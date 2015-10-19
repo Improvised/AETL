@@ -1,0 +1,142 @@
+      <style type='text/css'>
+
+
+
+</style>
+
+	  <script type='text/javascript'>
+        function add_form() {
+		
+          var views = $$('tr[id="view"]'), element = views[0], clone = element.cloneNode(true);          
+		  $("lists").appendChild(clone);
+          clone.removeClassName("view");         
+		  clone.down(2).style.backgroundColor="#f0f0ee"		  
+		  clone.down(4).innerHTML = "View " + (views.length) + " : ";
+		  clone.down(22).innerHTML = "";		 			  
+          del = $("delete");
+          a = $(clone).select("a").first();
+          a.href = del.href;
+          a.onclick = del.onclick;		  	
+        }
+		
+        function delete_form(element) {
+          var parent = $(element).up(5);
+
+          if (!$(parent).hasClassName("view")) {
+            $(parent).remove();
+          }
+        }
+      </script>
+      <table class="table">
+        <tr valign="top">
+          <td width="500px">
+            <table>
+              <tbody>
+              <tr>
+                <td>Carrier: </td>
+                <td><%= f.collection_select :carrier_id, @carriers, :id, :name, {:include_blank => "Please select"}, :disabled => is_readonly %></td>
+              </tr>
+              <tr>
+                <td width="70px">Project Manager: </p>
+</td>
+                <td><%= f.collection_select :employee_project_manager_id, @employee_project_managers, :id, :name, {:include_blank => "Please select"}, :disabled => is_readonly %></td>
+              </tr>
+              <tr>
+                <td>Job Description: </td>
+                <td><%= f.text_area :job_description, {:rows => 4, :cols => 45} %></td>
+              </tr>
+              <tr>
+                <td>Number of copies: </td>
+                <td><%= f.text_field :number_of_copies, :style=> "text-align:right;", :size => 2 %></td>
+              </tr>
+              <tr>
+                <td>Layout: </td>
+                <td>
+                  <%= f.collection_select :layout_id, @layouts, :id, :name, {:include_blank => "Please select"}, :disabled => is_readonly %>
+                  <%= link_to "Add new", {:controller => :layouts, :action => :new}, :title => "Add New Layout", :onclick => "Modalbox.show(this.href, {title: this.title, width: 600}); return false;" %>
+                </td>
+              </tr>
+              <tr>
+                <td>Notes: </td>
+                <td><%= f.text_area :notes, :rows => 4, :cols => 45 %></td>
+              </tr>
+              </tbody>
+            </table>
+          </td>
+          <td valign="top">
+            <table id="lists">
+              <% s = 0 %>
+			  <% @nex_gen = true %>
+              <%- views.each_with_index do |x, i| -%>
+			  <% @nex_gen = false %>
+              <tr id="view">
+                <td>
+                  <table bgcolor="#b9b9b9" id="CDFTable">
+                    <tr>
+                      <td>View <%= i + 1 %>: </td>
+                      <td><%= text_field 'view[view]', "", :size => 50, :value => x.view %></td>
+                    </tr>
+                    <tr>
+                      <td>Time of Day Shot: </td>
+                      <td><%= calendar_date_select_tag "view[time_of_day_shot][]", !x.time_of_day_shot.blank? ? x.time_of_day_shot.strftime("%m-%d-%Y %H:%M") : "", :time => true %> ||
+					  Field of view: <%= text_field 'view[field_of_view]', '', :size => 4, :value => x.field_of_view %>mm 
+					  </td>
+                    </tr>
+               
+                    <tr>
+                      <td>Notes: </td>
+                      <td><%= text_field 'view[notes]', '', :size => 50, :value => x.notes %></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>
+                        <%= link_to "Delete", {:action => :delete_view, :id => x.id}, {:confirm => "Are you sure?", :method => :delete} %> 
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <% s = i + 1 %>
+              <%- end -%>
+			  <%if @nex_gen == true %>
+              <tr id="view" class="view">
+                <td>
+                  <table bgcolor="#f0f0ee" >
+                    <tr>
+                      <td>View <%= (s + 1) %>: </td>
+                      <td><%= text_field 'view[view]', "", :size => 50 %></td>
+                    </tr>
+                    <tr>
+                      <td>Time of Day Shot: </td>
+                      <td><%= calendar_date_select_tag "view[time_of_day_shot][]", "", :time => true %>
+					  Field of view: <%= text_field 'view[field_of_view]', '', :size => 4%>mm 
+					  </td>
+                    </tr>                    
+                    <tr>
+                      <td>Notes: </td>
+                      <td><%= text_field 'view[notes]', '', :size => 50%></td>
+                    </tr>
+  
+                  </table>
+                </td>
+              </tr>
+			  <% else %>
+			  <tr id="view" class="view">
+                <td>
+                  <table>
+
+                  </table>
+                </td>
+              </tr>
+			  <% end %>
+              <tr>
+                <td><%= link_to_function "Add More", 'add_form();' %></td>
+				
+              </tr>
+			  
+            </table>
+			<%= submit_tag "Update" %>
+          </td>
+        <tr>
+      </table>
+	  

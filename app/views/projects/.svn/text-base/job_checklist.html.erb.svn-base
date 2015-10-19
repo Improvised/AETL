@@ -1,0 +1,72 @@
+<%= render :partial => "job_checklist_header" %>
+            <tr>
+              <td width="20%"><font color="#34647a">Site Name:</font> </td>
+              <td width="30%"><b><%= @project.name %></b></td>
+              <td width="20%"><font color="#34647a">AE Job ID:</font> </td>
+              <td><b><%= @project.ae_job_id %></b></td>
+            </tr>
+            <tr>
+              <td><font color="#34647a">Site Number:</font> </td>
+              <td><b><%= @project.number %></b></td>
+              <td><font color="#34647a">Company:</font> </td>
+              <td><%= @project.company.name unless @project.company.nil? %></td>
+            </tr>
+            <tr>
+              <td><font color="#34647a">Carrier:</font> </td>
+              <td><%= @project.jobchecklist.carrier.name if (!@project.jobchecklist.blank? && !@project.jobchecklist.carrier.blank?) %></td>
+              <td><font color="#34647a">Date Received:</font> </td>
+              <td><%= @project.date_in.strftime("%m/%d/%Y") unless @project.date_in.blank? %></td>
+            </tr>
+            <tr>
+              <td><font color="#34647a">Site Address:</font> </td>
+              <td><%= @project.address_line_1 %></td>
+              <td><font color="#34647a">Due Date:</font> </td>
+              <td><%= @project.due_date.strftime("%m/%d/%Y") unless @project.due_date.blank? %></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td><%= @project.address_line_2 %></td>
+              <td><font color="#34647a">Contact:</font> </td>
+              <td><%= @project.contact.name unless @project.contact.nil? %></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td><%= @project.city %>, <%= @project.state %> <%= @project.zip %></td>
+              <td><font color="#34647a">Job Type:</font> </td>
+              <td><%= @project.job_type.name unless @project.job_type.nil? %></td>
+            </tr>
+            <tr>
+              <td><font color="#34647a">Project Manager:</font> </td>
+              <td><%= @project.employee_project_manager.name unless @project.employee_project_manager.nil? %></td>
+              <td><font color="#34647a">Handling:</font> </td>
+              <td><%= @project.handling.name unless @project.handling.nil? %></td>
+            </tr>
+		            	
+				<% if @job_his_lists == nil%>
+					<% dumb = nil%>	
+			
+					
+
+				<% else %>
+				<tr>
+              <td><font color="#34647a">Revision of:</font> </td>
+              <td>  
+            		<% @job_his_lists.each do |project_his|%>					  				
+					<b><%= project_his.ae_job_id %></b>		
+						
+				</td>
+              <td><font color="#34647a">Previous Engineer:</font> </td>
+              <td>		  				
+					<%= project_his.employee_production.name unless project_his.employee_production.blank? %>	
+					<% break %>			
+					<% end %>
+				<% end %>				
+              </td>
+            </tr>
+<%= render :partial => "job_checklist_footer" %>
+
+<script type="text/javascript">
+  Event.observe(window, 'unload', function() {
+    if (window.opener && !window.opener.closed) window.opener.location.href = window.opener.location.href;
+  });
+</script>

@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>A E P M</title>
+    <%= javascript_include_tag "prototype" %>
+    <style type="text/css">
+      body {
+        font: 12pt Times, serif;
+      }
+      .underline {
+        border-bottom: 1px solid #000;
+      }
+    </style>
+  </head>
+  <body>
+    <table align="center" width="790px">
+      <tr>
+        <td class="underline"><div align="center"><h2>Client Request Form</h2></div></td>
+      </tr>
+      <tr>
+        <td>
+          <table width="100%">
+            <tr>
+              <td width="25%">AE Job ID : </td>
+              <td width="25%"><%= @client_request.cr_job_id %></td>
+              <td colspan="2" align="center"><u>In Reference to</u></td>
+            </tr>
+            <tr>
+              <td>Date in : </td>
+              <td><%= @client_request.date_in.strftime("%m-%d-%Y") unless @client_request.date_in.blank? %></td>
+              <td>AE Job ID : </td>
+              <td><%= @client_request.project.ae_job_id unless @client_request.project.blank? %></td>
+            </tr>
+            <tr>
+              <td>Contact : </td>
+              <td><%= @client_request.contact.name unless @client_request.contact.blank? %></td>
+              <td>Job Name : </td>
+              <td><%= @client_request.project_name unless @client_request.project_name.blank? %></td>
+            </tr>
+            <tr>
+              <td>Company : </td>
+              <td><%= @client_request.company.name unless @client_request.company.blank? %></td>
+              <td>Job Number : </td>
+              <td><%= @client_request.project_number unless @client_request.project_number.blank? %></td>
+            </tr>
+            <tr>
+              <td>Due Date:</td>
+              <td><%= @client_request.due_date.strftime("%m-%d-%Y") unless @client_request.due_date.blank? %></td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td>Job Type : </td>
+              <td><%= @project.job_type.name unless @project.job_type.nil? %></td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr height="370px">
+              <td valign="top">Project Notes : </td>
+              <td colspan="3" valign="top"><%= @client_request.project_note unless @client_request.project_note.blank? %></td>
+            </tr>
+            <tr height="370px">
+              <td valign="top">Transmittal Description : </td>
+              <td colspan="3" valign="top"><%= @client_request.trans_desc unless @client_request.trans_desc.blank? %></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td class="underline">&nbsp<div><%= will_paginate @views unless @views.nil? %><%= button_to_function "Print", "$(this).up().hide();window.print()"%></div></td>
+      </tr>
+    </table>
+  </body>
+</html>

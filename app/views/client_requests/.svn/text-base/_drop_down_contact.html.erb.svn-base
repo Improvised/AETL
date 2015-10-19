@@ -1,0 +1,1 @@
+<%= collection_select :client_request, method.to_sym, @contacts, :id, :name, {:include_blank => "Please select"} %>

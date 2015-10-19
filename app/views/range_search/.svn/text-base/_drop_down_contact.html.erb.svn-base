@@ -1,0 +1,2 @@
+<%= collection_select :project, method.to_sym, contacts, :id, :name, {:include_blank => "Please select"}, {:disabled => is_readonly, :id => :contact_id} %>
+

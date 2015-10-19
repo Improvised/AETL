@@ -1,0 +1,38 @@
+<table align="center">
+  <thead>
+    <tr>
+      <th colspan="8"><u>Job Scorecard</u></th>
+    </tr>
+    <tr>
+      <th>AE Job ID</th>
+      <th>Projet Name</th>
+      <th>Project Number</th>
+      <th>Contact</th>
+      <th>Date Finished</th>
+      <th>Price</th>
+      <th>Production hrs</th>
+      <th>PM hrs</th>
+      <th>Miles</th>
+    </tr>
+  </thead>
+  <tbody>
+<% unless @projects.empty? %>
+  <% @projects.each do |project| %>
+    <tr>
+      <td align="center"><%= project.ae_job_id unless project.ae_job_id.blank? %></td>
+      <td><%= project.name unless project.name.blank? %></td>
+      <td><%= project.number unless project.number.blank? %></td>
+      <td><%= project.contact.name unless project.contact.blank? %></td>
+      <td align="center"><%= project.due_date.strftime("%m-%d-%Y") unless project.due_date.blank? %></td>
+      <td><%= number_to_currency(project.price) unless project.price.blank? %></td>
+      <td><%= project.production_hour unless project.production_hour.blank? %></td>
+      <td><%= project.project_manager_hour unless project.project_manager_hour.blank? %></td>
+      <td><%= project.mileage unless project.mileage.blank? %></td>
+    </tr>
+  <% end %>
+<% end %>
+    <tr>
+      <td colspan="9"><%= will_paginate @projects %></td>
+    </tr>
+  </tbody>
+</table>

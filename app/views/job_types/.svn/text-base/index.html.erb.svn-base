@@ -1,0 +1,4 @@
+<option value="">Please select</option>
+<% @job_types.each do |job_type| %>
+  <option value="<%= job_type.id %>"><%= job_type.name %></option>
+<% end %>

@@ -1,0 +1,7 @@
+<ul>
+<% unless @projects.blank? %>
+  <% @projects.each do |project| %>
+    <li id="<%=project.id%>"><div><%= link_to project.ae_job_id, edit_project_path(project.id) %></div></li>
+  <% end %>
+<% end %>
+</ul>

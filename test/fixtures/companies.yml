@@ -1,0 +1,66 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# one:
+#   column: value
+#
+# two:
+#   column: value
+one:
+  id: 1
+  name: "google"
+  address_line_1: "Mountain View"
+  address_line_2: ""
+  city: "Silicon Valley"
+  state: "CA"
+  zip_code: "94933"
+  phone: "733-54633"
+  fax: "733-54633"
+  billing_to_company_id: ""
+  sale_id: 1
+  website: "www.google.com"
+  email: "support@google.com"
+
+two:
+  id: 2
+  name: "yahoo"
+  address_line_1: "Mountain View"
+  address_line_2: ""
+  city: "San Diego"
+  state: "CA"
+  zip_code: "94444"
+  phone: "733-54633"
+  fax: "733-54633"
+  billing_to_company_id: ""
+  sale_id: 2
+  website: "www.yahoo.com"
+  email: "support@yahoo.com"
+
+three:
+  id: 3
+  name: "Channel Law Group, LLP"
+  address_line_1: "100 Oceangate"
+  address_line_2: "Suite 1400"
+  city: "Long Beach"
+  state: "CA"
+  zip_code: "90802"
+  phone: "(310) 982-1760"
+  fax: "(562) 216-5090"
+  billing_to_company_id: 4
+  sale_id: 1
+  website: "www.channel.com"
+  email: "support@channel.com"
+
+four:
+  id: 4
+  name: "American Tower Corporation"
+  address_line_1: "2361 Campus # 240"
+  address_line_2: ""
+  city: "Irvine"
+  state: "CA"
+  zip_code: "92612"
+  phone: "No Phone"
+  fax: "(562) 216-5090"
+  billing_to_company_id:
+  sale_id: 2
+  website: "www.american.com"
+  email: "support@american.com"

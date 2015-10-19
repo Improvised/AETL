@@ -1,0 +1,13 @@
+
+<%= form_for [@company, @contact], remote: true, method: :post do |f| %>
+  <p>Name :</p>
+  <p><%= f.text_field :name, :size => "25" %></p>
+  <p>Phone :</p>
+  <p><%= f.text_field :phone, :size => "25" %></p>
+  <p>Fax :</p>
+  <p><%= f.text_field :fax, :size => "25" %></p>
+  <p>Email :</p>
+  <p><%= f.text_field :email, :size => "25" %></p>
+  <p><%= submit_tag "Create" %> <span id="message"></span></p>
+<% end %>
+<p></p>

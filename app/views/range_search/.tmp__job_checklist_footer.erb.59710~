@@ -1,0 +1,72 @@
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td><hr></td>
+      </tr>
+      <tr>
+        <td>
+          <table width="100%">
+            <tr>
+              <td colspan="3"><b><font color="#34647a">Job Overview: </Font><%= @project.jobchecklist.job_description unless @project.jobchecklist.nil? %></b></td>
+            </tr>
+            
+			<tr>
+              <td colspan="3"><b><font color="#34647a">Layout:</Font> <b><%= @project.jobchecklist.layout.name unless @project.jobchecklist.nil? or @project.jobchecklist.layout.nil? %></b></td>
+            </tr>
+            <tr>
+              <td colspan="3"><b><font color="#34647a">Number of copies:</Font> <b> <%= @prints_var %></b></td>
+            </tr>
+            <tr>
+              <td colspan="3"><b><font color="#34647a">Notes:</Font> <b><%= @project.jobchecklist.notes unless @project.jobchecklist.nil? %></b><br /><br /></td
+			</tr>
+			<tr>
+              <td colspan="3"><b><font color="#34647a">Number of views:</Font> <b><%= @project.jobchecklist.views.size unless @project.jobchecklist.nil? %></b></td>
+            </tr>			
+			 
+		    <tr>
+			 <td width="12%" align="left" valign="bottom"><font color="#34647a"><b><u>FOV:</u></b></font></td>
+             <td align="left" valign="bottom"><font color="#34647a"><b><u>View Description & Notes:</u></b></font></td>			 
+			 <td width="20%" align="right" valign="bottom"><font color="#34647a"><b><u>Photo Date:</u></b></font></td>
+            </tr>
+
+        <% unless @views.nil? %>
+          <% @views.each do |view| %>
+
+		      <tr>
+              	<td valign="top"><u>View: <% @i += 1 %><%= @i %></u><br />
+					<b><%= view.field_of_view %>mm</b>
+				</td>				                  
+              	<td valign="top">
+                	<%= view.view %><br />
+                   (<%= view.notes %>)
+              	</td>
+              	<td align="right" valign="top">
+                	<%= view.time_of_day_shot.strftime("%b %d %I:%M %p") unless view.time_of_day_shot.nil? %><br />
+              	</td>	
+              	</tr>
+			  <tr>
+        		<td colspan="3" class="underline_2">&nbsp;</td>
+      		</tr>
+
+
+	
+          <% end %>
+		  </table>
+        <% end %>
+
+          
+        </td>
+      </tr>
+      <tr>
+       
+      </tr>
+
+
+      <tr>
+        <td ><div><br /><%= button_to_function "Print", "$(this).up().hide();window.print()"%></div></td>
+      </tr>
+    </table>
+	</font>
+  </body>
+</html>

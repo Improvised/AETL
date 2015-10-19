@@ -1,0 +1,308 @@
+class ProjectsController < ApplicationController
+  before_filter :prepare_project, :except => [:index, :contact_by_company]
+  before_filter :prepare_data, :except => [:index, :contact_by_company]
+  before_filter :prepare_counter, :only => [:index, :search]
+  skip_before_filter :verify_authenticity_token, :only => [:auto_complete_for_project_ae_job_id, :auto_complete_for_project_company, :auto_complete_for_project_billing_to_company]
+  skip_before_filter :verify_authenticity_token, only: [:update_job_status, :update_delivery_status]
+
+  def index
+    @projects = Project.prepare_project("All Jobs", "!=").paginate :page => params[:page], :per_page => COUNT_PER_PAGE
+  end
+  
+  def add_size
+   $all_proj_total = Project.all.size
+  end
+
+  def search
+    @all_projects = Project.search(params)
+    @projects = @all_projects.paginate :page => params[:page], :per_page => COUNT_PER_PAGE
+    render :action => 'index'
+  end
+
+  def new
+    @project = Project.new
+    #default
+    @project.job_type_id = JobType.default
+    @project.handling_id = Handling.default
+    @project.travel_id = Travel.default
+    @project.date_in = Time.now
+  end
+
+  def create
+    create_engineer_and_project_manager
+    @project = Project.new(params[:project])
+    if @project.save
+      flash[:message] = 'Project was added'
+      redirect_to new_project_jobchecklists_path(@project) and return
+    end
+
+    prepare_data
+    @contacts = Contact.find_all_by_company_id(@project.company_id) unless @project.company_id.blank?
+    render :action => 'new'
+  end
+
+  def edit
+    navcalc
+    history_links
+    @contacts = @project.contacts
+    @billing_to_contacts = @project.billing_to_contacts
+    @billing_to_contacts << Contact.find_by_name("Accounts Payable")
+    rescue
+      redirect_to :action => :index
+  end
+
+  def update
+    create_engineer_and_project_manager
+    # params[:project] = fix_format_date(params[:project])
+
+    if @project.update_attributes(params[:project])
+      flash[:message] = 'Project was updated'
+      redirect_to edit_project_path(@project) and return
+    end
+
+    prepare_data
+    @contacts = @project.company.contacts unless @project.company.blank?
+    @billing_to_contacts = @project.billing_to_company.contacts unless @project.billing_to_company.blank?
+    render :action => 'new'
+  end
+
+  def destroy
+    @project.destroy
+    flash[:message] = 'Project was deleted'
+    redirect_to :action => :index
+  end
+
+  def show
+    @contacts = @project.contacts
+    @billing_to_contacts = @project.billing_to_contacts
+  rescue
+    redirect_to :action => :index
+  end
+
+  def contact_by_company
+      @html_id = params[:html_id]
+      @company_id = params[:company_id]
+      payable = Contact.find_by_name("Accounts Payable")
+      contacts = Contact.where(company_id: params[:id])
+      contacts = contacts << payable
+      @contacts = contacts.sort{|x,y| x.id <=> y.id}
+    respond_to :js
+    
+  rescue
+      @contacts = contacts << payable
+    respond_to :js
+    # respond_to do |format|
+    #   format.json { render json: @contacts }
+    # end
+  end
+
+  def revision
+    @project.date_in = Time.now
+  end
+
+  def create_revision
+    Project.create_revision(params[:id], params[:revision])
+    @lastrec = Project.order("id DESC").first
+    redirect_to edit_project_path(@lastrec) and return
+  end
+
+  def transmittal
+    @project = Project.find(params[:id])
+    render :layout => false
+  end
+
+  def update_delivery_status
+    Project.find(params[:id]).update_attribute("delivery_id", "2") if params[:id]
+    render :text => "", :layout => false
+  end
+
+  def update_job_status
+    Project.find(params[:id]).update_attribute("job_status_id", "2") if params[:id]
+    render :text => "", :layout => false
+  end
+
+  def job_checklist
+    
+    prepare_project    
+    if @project.jobchecklist == nil
+      @prints_var = ""
+    else  
+      if (@project.jobchecklist.number_of_copies == 0 or @project.jobchecklist.number_of_copies == nil) 
+        @prints_var = "**NO PRINTS NEEDED**"
+      else
+        @prints_var = @project.jobchecklist.number_of_copies
+      end
+    end
+    
+    job_s = @project.job_history unless @project.job_history.blank?
+    job_his_array = job_s.split(/\s*,\s*/) unless @project.job_history.blank?
+    job_his_list = Project.where({ :ae_job_id => job_his_array}).order("ae_job_id DESC") unless @project.job_history.blank?
+    
+    @job_his_lists = job_his_list
+    
+    
+    @i = (!params[:page].nil? ? (params[:page].to_i - 1) : 0) * 10
+    @views = ViewJobchecklist.paginate :page => params[:page] || 1, :per_page => 20, :conditions => ["jobchecklist_id = ?", @project.jobchecklist.id] unless @project.jobchecklist.nil?
+    render :layout => false
+  end
+
+  def job_checklist_light
+    job_checklist
+  end
+
+  def auto_complete_for_project_ae_job_id
+    search = params[:ae_job_id]
+    @projects = Project.where(["ae_job_id LIKE ?", "%" + search + "%"]).limit(20)
+    # render :partial => "project_ae_job_id"
+    respond_to do |format|
+      format.json { render json: @projects }
+    end
+  end
+
+  def auto_complete_for_project_company
+    search = params[:company]
+    # @companieses = Company.find(:all, :conditions => ["name LIKE ?", "%" + search + "%"], :limit => 20, :order => "name ASC")
+    @companieses = Company.where("name LIKE ?", "%#{search}%").order("name ASC").limit(20)
+    respond_to do |format|
+      format.json { render json: @companieses }
+    end
+    # render :partial => "project_company"
+  end
+
+  def auto_complete_for_project_billing_to_company
+    search = params[:billing_to_company]
+    @billing_to_companies = Company.where(["name LIKE ?", "%" + search + "%"]).limit(20).order("name ASC")
+    render :partial => "project_bill_to_company"
+  end
+  
+  private
+  def prepare_data
+    @employee_productions = EmployeeProduction.all
+    @employee_project_managers = EmployeeProjectManager.all
+    @job_statuses = JobStatus.all
+    @job_types = JobType.all
+    @handlings = Handling.all
+    @companies = Company.select("id, name")
+    @travels = Travel.all
+    @sales = Sale.all
+    @contacts = []
+    @billing_to_contacts = []
+    @deliveries = Delivery.all
+  end
+
+  def prepare_data_chechlist
+    @carriers = Carrier.all
+    @layouts = Layout.all
+  end
+
+  def prepare_project
+    @project = Project.find(params[:id], :include => [:contacts, :billing_to_contacts]) unless params[:id].blank?
+    #@project.date_in = Time.now #if @project.date_in.blank?
+  end
+
+  def create_engineer_and_project_manager
+    unless params[:new_engineer].blank?
+      ep = EmployeeProduction.create(:name => params[:new_engineer])
+      params[:project][:employee_production_id] = ep.id
+    end
+    unless params[:new_project_manager].blank?
+      pm = EmployeeProjectManager.create(:name => params[:new_project_manager])
+      params[:project][:employee_project_manager_id] = pm.id
+    end
+  end
+
+  def prepare_counter
+    @i = (!params[:page].blank? ? (params[:page].to_i - 1) : 0) * COUNT_PER_PAGE
+  end
+  
+  def navcalc    
+    @lastrec = Project.order("id DESC").first
+    
+    ####For browsing up 1 job(s)    
+    @nav_up1 = @project.id + 1
+    if @nav_up1 > @lastrec.id
+      @nav_up1 = @project.id    
+    elsif  Project.exists?(@nav_up1) == true
+      @nav_up1 = @project.id + 1
+    elsif Project.exists?(@nav_up1) == false      
+        begin 
+          @nav_up1 = @nav_up1 + 1
+        end until Project.exists?(@nav_up1) == true    
+    end
+    ##########################    
+    ####For down 1 job(s)
+    @nav_dn1 = @project.id - 1
+    if @nav_dn1 < 1
+      @nav_dn1 = @project.id 
+    elsif  Project.exists?(@nav_dn1) == true
+      @nav_dn1 = @project.id - 1
+    elsif Project.exists?(@nav_dn1) == false
+       begin 
+          @nav_dn1 = @nav_dn1 - 1
+       end until Project.exists?(@nav_dn1) == true
+    end
+    ##########################
+    #10
+    ####For browsing up 10 job(s)    
+    @nav_up10 = @project.id + 10
+    if @nav_up10 > @lastrec.id
+      @nav_up10 = @project.id    
+    elsif  Project.exists?(@nav_up10) == true
+      @nav_up10 = @project.id + 10
+    elsif Project.exists?(@nav_up10) == false      
+        begin 
+          @nav_up10 = @nav_up10 + 1
+        end until Project.exists?(@nav_up10) == true    
+    end
+    ##########################    
+    ####For down 10 job(s)
+    @nav_dn10 = @project.id - 10
+    if @nav_dn10 < 1
+      @nav_dn10 = @project.id 
+    elsif  Project.exists?(@nav_dn10) == true
+      @nav_dn10 = @project.id - 10
+    elsif Project.exists?(@nav_dn10) == false
+       begin 
+          @nav_dn10 = @nav_dn10 - 1
+       end until Project.exists?(@nav_dn10) == true
+    end
+    ##########################
+    
+        ##########################
+    #50
+    ####For browsing up 50 job(s)    
+    @nav_up50 = @project.id + 50
+    if @nav_up50 > @lastrec.id
+      @nav_up50 = @project.id    
+    elsif  Project.exists?(@nav_up50) == true
+      @nav_up50 = @project.id + 50
+    elsif Project.exists?(@nav_up50) == false      
+        begin 
+          @nav_up50 = @nav_up50 + 1
+        end until Project.exists?(@nav_up50) == true    
+    end
+    ##########################    
+    ####For down 50 job(s)
+    @nav_dn50 = @project.id - 50
+    if @nav_dn50 < 1
+      @nav_dn50 = @project.id 
+    elsif  Project.exists?(@nav_dn50) == true
+      @nav_dn50 = @project.id - 50
+    elsif Project.exists?(@nav_dn50) == false
+       begin 
+          @nav_dn50 = @nav_dn50 - 1
+       end until Project.exists?(@nav_dn50) == true
+    end
+    ##########################
+  def history_links
+    job_s = @project.job_history unless @project.job_history.blank?
+    job_his_array = job_s.split(/\s*,\s*/) unless @project.job_history.blank?
+
+    @job_his_links = Project.where({ :ae_job_id => job_his_array}).order("ae_job_id DESC") unless @project.job_history.blank?    
+    
+  end
+    
+    
+  end
+
+end

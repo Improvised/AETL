@@ -1,0 +1,5 @@
+
+<%= form_for @handling, remote: true do |f| %>
+  <p>Name : <%= f.text_field :name, :size => "25" %>  <%= submit_tag "Create" %>&nbsp;<span id="message"></span></p>
+<% end %>
+<p><%= link_to "Close", :update => :handling_id, :url => {:controller => :handlings}, :method => :get,remote: true, :complete => "Modalbox.hide()" %></p>

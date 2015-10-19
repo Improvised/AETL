@@ -1,0 +1,131 @@
+<table class="table">
+  <tr>
+    <td>
+      <table class="table">
+        <tbody>
+          <tr>
+            <td width="100px">AE Job id : </td>
+            <td><%= now_cr_job_id = @client_request.cr_job_id || @client_request.create_cr_job_id %><%= f.hidden_field :cr_job_id, :value => now_cr_job_id %></td>
+          </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      Project Notes : <br />
+      <%= f.text_area :project_note, :cols => 140, :rows => 10, :readonly => is_readonly %>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      Transmittal Description : <br />
+      <%= f.text_area :trans_desc, :cols => 140, :rows => 10, :readonly => is_readonly %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <table class="table">
+        <tbody>
+          <tr>
+            <td width="100px">Reference to AE Job ID :</td>
+            <td>
+              <%= f.hidden_field :project_id, :value => (!@client_request.project.blank? ? @client_request.project.id.to_s : "") %>
+              <%= text_field_with_auto_complete "", :reference, {:size => 25, :value => (!@client_request.project.blank? and !@client_request.project.ae_job_id.blank? ? @client_request.project.ae_job_id : ""), :readonly => is_readonly, :onkeyup => "if(this.value=='')$('client_request_project_id').value=''"}, :skip_style => false %>
+            </td>
+          </tr>
+          <tr>
+            <td width="100px">Date In :</td>
+            <td><%= calendar_date_select_tag "client_request[date_in]", @client_request.date_in.blank? ? "" : @client_request.date_in.strftime("%m-%d-%Y"), {:size => 25, :readonly => is_readonly} %></td>
+          </tr>
+          <tr>
+            <td width="100px">Due Date :</td>
+            <td><%= calendar_date_select_tag "client_request[due_date]", @client_request.due_date.blank? ? "" : @client_request.due_date.strftime("%m-%d-%Y"), {:size => 25, :readonly => is_readonly} %></td>
+          </tr>
+          <tr>
+            <td width="100px">Project Name :</td>
+            <td><%= f.text_field :project_name, :size => "25", :readonly => is_readonly %></td>
+          </tr>
+          <tr>
+            <td width="100px">Project Number :</td>
+            <td><%= f.text_field :project_number, :size => "10", :readonly => is_readonly %></td>
+          </tr>
+          <tr>
+            <td width="100px">Job Status :</td>
+            <td><%= f.collection_select :job_status_id, @job_statuses, :id, :name, {:include_blank => "Please select"}, :disabled => is_readonly %></td>
+          </tr>
+          <tr>
+            <td width="100px">Company :</td>
+            <td><%= f.collection_select :company_id, @companies, :id, :name, {:include_blank => "Please select"}, {:disabled => is_readonly, :onchange => remote_function(:update => "contact", :url => {:action => 'contact_by_company'}, :with => "'id='+$F(this)+'&method_type=contact_id'")} %></td>
+          </tr>
+          <tr>
+            <td width="100px">Contact :</td>
+            <td id="contact"><%= f.collection_select :contact_id, @contacts, :id, :name, {:include_blank => "Please select"}, :disabled => is_readonly %></td>
+          </tr>
+          <tr>
+            <td width="100px">Account Manager:</td>
+            <td>
+              <%= f.collection_select :account_manager_id, @sales, :id, :name, {:include_blank => "Please select"}, {:disabled => is_readonly, :id => :account_manager_id} %>
+              <%= link_to "Add new", {:controller => :sales, :action => :new}, :title => "Add Account Manager", :onclick => "Modalbox.show(this.href, {title: this.title, width: 600}); return false;" %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </td>
+    <td align="top">
+      <table class="table">
+        <tbody>
+          <tr>
+            <td width="100px">Engineer :</td>
+            <td>
+              <%= f.collection_select :employee_production_id, @employee_productions, :id, :name, {:include_blank => "Please select"}, {:disabled => is_readonly, :id => :employee_production_id} %>
+              <%= link_to "Add new", {:controller => :employee_productions, :action => :new}, :title => "Add New Engineer", :onclick => "Modalbox.show(this.href, {title: this.title, width: 600}); return false;" %>
+            </td>
+          </tr>
+          <tr>
+            <td width="100px">Engineer Hours :</td>
+            <td><%= f.text_field :production_hour, :size => "25", :style => "text-align: right", :disabled => is_readonly %></td>
+          </tr>
+          <tr>
+            <td width="100px">Job Type :</td>
+            <td>
+              <%= f.collection_select :client_request_job_type_id, @job_types, :id, :name, {:include_blank => "Please select"}, {:disabled => is_readonly, :id => :job_type_id} %>
+            </td>
+          </tr>
+          <tr>
+            <td width="100px">Handling :</td>
+            <td>
+              <%= f.collection_select :handling_id, @handlings, :id, :name, {:include_blank => "Please select"}, {:disabled => is_readonly, :id => :handling_id} %>
+            </td>
+          </tr>
+          <tr>
+            <td width="100px">Travel :</td>
+            <td>
+              <%= f.collection_select :travel_id, @travels, :id, :name, {:include_blank => "Please select"}, {:disabled => is_readonly, :id => :travel_id} %>
+            </td>
+          </tr>
+            <td width="110px">Bill to Company :</td>
+            <td><%= f.collection_select :billing_to_company_id, @companies, :id, :name, {:include_blank => "Please select"},
+                  {:disabled => is_readonly, :onchange => remote_function(:update => "billing_to_contact_id", :url => {:action => 'contact_by_company'}, :with => "'id='+$F(this)+'&method_type=billing_to_contact_id'")} %></td>
+          </tr>
+          <tr>
+            <td width="110px">Bill to Contact :</td>
+            <td id="billing_to_contact_id"><%= f.collection_select :billing_to_contact_id, @billing_to_contacts, :id, :name, {:include_blank => "Please select"}, :disabled => is_readonly %></td>
+          </tr>
+          <tr>
+            <td width="100px">Purchase Order :</td>
+            <td><%= f.text_field :purchase_order, :size => "25", :style => "text-align: right", :disabled => is_readonly %></td>
+          </tr>
+          <tr>
+            <td width="100px">Price : $</td>
+            <td><%= f.text_field :price, :size => "25", :style => "text-align: right", :disabled => is_readonly %></td>
+          </tr>
+          <tr>
+            <td width="100px">Invoice Number :</td>
+            <td><%= f.text_field :invoice, :size => "25", :style => "text-align: right", :disabled => is_readonly %></td>
+          </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+</table>

@@ -1,0 +1,35 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# one:
+#   column: value
+#
+# two:
+#   column: value
+one:
+  id: 1
+  name: "AE Photographed"
+
+two:
+  id: 2
+  name: "None (Revision)"
+
+three:
+  id: 3
+  name: "Out of state"
+
+four:
+  id: 4
+  name: "Photo Provided"
+
+five:
+  id: 5
+  name: "Zone 1"
+
+six:
+  id: 6
+  name: "Zone 2"
+
+seven:
+  id: 7
+  name: "Zone 3"
+
